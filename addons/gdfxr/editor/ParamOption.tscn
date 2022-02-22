@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/gdfxr/editor/ParamOption.gd" type="Script" id=1]
+[ext_resource path="res://addons/gdfxr/editor/EditorIconButton.gd" type="Script" id=2]
+
+[node name="WaveformOption" type="HBoxContainer"]
+margin_right = 253.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 41, -65 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 133.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+text = "Waveform"
+align = 2
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 137.0
+margin_top = 10.0
+margin_right = 237.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_vertical = 4
+clip_text = true
+
+[node name="Reset" type="ToolButton" parent="."]
+margin_left = 241.0
+margin_top = 9.0
+margin_right = 253.0
+margin_bottom = 31.0
+size_flags_vertical = 4
+script = ExtResource( 2 )
+icon_name = "ReloadSmall"
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]
+[connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]

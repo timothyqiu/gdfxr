@@ -1,0 +1,230 @@
+# Translations template for gdfxr.
+# Copyright (C) 2022 Haoyu Qiu
+# This file is distributed under the same license as the gdfxr project.
+# Haoyu Qiu <timothyqiu32@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gdfxr 1.0\n"
+"Report-Msgid-Bugs-To: timothyqiu32@gmail.com\n"
+"POT-Creation-Date: 2022-02-25 17:37+0800\n"
+"PO-Revision-Date: 2022-02-25 17:38+0800\n"
+"Last-Translator: Haoyu Qiu <timothyqiu32@gmail.com>\n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.9.1\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: addons/gdfxr/editor/Editor.gd
+#, python-format
+msgid ""
+"There are unsaved changes.\n"
+"Open '%s' anyway?"
+msgstr ""
+"存在未保存的修改。\n"
+"仍然要打开“%s”吗？"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "SFXR Editor"
+msgstr "SFXR 编辑器"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "SFXR Audio"
+msgstr "SFXR 音频"
+
+#: addons/gdfxr/editor/Editor.gd
+#, python-format
+msgid "'%s' is not a valid SFXR file."
+msgstr "“%s”不是有效的 SFXR 文件。"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Unsaved sound"
+msgstr "未保存音效"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid ""
+"There are unsaved changes.\n"
+"Create a new one anyway?"
+msgstr ""
+"存在未保存的修改。\n"
+"仍然要新建吗？"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid ""
+"There are unsaved changes.\n"
+"Load anyway?"
+msgstr ""
+"存在未保存的修改。\n"
+"仍然要加载吗？"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "New"
+msgstr "新建"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Load"
+msgstr "加载"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Save"
+msgstr "保存"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Play"
+msgstr "播放"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Restore"
+msgstr "恢复"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Pickup/Coin"
+msgstr "拾取/金币"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Laser/Shoot"
+msgstr "激光/射击"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Explosion"
+msgstr "爆炸"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Powerup"
+msgstr "升级"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Hit/Hurt"
+msgstr "击中/受伤"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Jump"
+msgstr "跳跃"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Blip/Select"
+msgstr "短滴/选择"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Mutate"
+msgstr "演化"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Randomize"
+msgstr "随机"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Attack Time"
+msgstr "起音时间"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Sustain Time"
+msgstr "延音时间"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Sustain Punch"
+msgstr "延音冲击"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Decay Time"
+msgstr "释音时间"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Change Amount"
+msgstr "改变强度"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Change Speed"
+msgstr "改变速度"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Volume"
+msgstr "音量"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Start Frequency"
+msgstr "起始频率"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Min Frequency"
+msgstr "最低频率"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Slide"
+msgstr "滑音"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Delta Slide"
+msgstr "滑音增量"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Vibrato Depth"
+msgstr "颤音深度"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Vibrato Speed"
+msgstr "颤音速度"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Repeat Speed"
+msgstr "重复速度"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Square"
+msgstr "方波"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Sawtooth"
+msgstr "锯齿波"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Sine"
+msgstr "正弦波"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Noise"
+msgstr "噪波"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Square Duty"
+msgstr "方波工作"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Duty Sweep"
+msgstr "工作变频"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Phaser Offset"
+msgstr "相位偏移"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Phaser Sweep"
+msgstr "相位变频"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Low-pass Cutoff"
+msgstr "低通截频"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Low-pass Sweep"
+msgstr "低通变频"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Low-pass Resonance"
+msgstr "低通共振"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "High-pass Cutoff"
+msgstr "高通截频"
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "High-pass Sweep"
+msgstr "高通变频"
+
+#: addons/gdfxr/editor/ParamOption.tscn
+msgid "Waveform"
+msgstr "波形"

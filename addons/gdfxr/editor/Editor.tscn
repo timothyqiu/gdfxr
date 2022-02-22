@@ -1,0 +1,380 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://addons/gdfxr/editor/EditorIconButton.gd" type="Script" id=1]
+[ext_resource path="res://addons/gdfxr/editor/Editor.gd" type="Script" id=2]
+[ext_resource path="res://addons/gdfxr/editor/ParamSlider.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/gdfxr/editor/ParamOption.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/gdfxr/editor/PluginTranslator.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/gdfxr/editor/VersionButton.tscn" type="PackedScene" id=6]
+
+[node name="Editor" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Toolbar" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 22.0
+
+[node name="New" type="ToolButton" parent="Toolbar"]
+margin_right = 12.0
+margin_bottom = 22.0
+hint_tooltip = "New"
+script = ExtResource( 1 )
+icon_name = "New"
+
+[node name="Load" type="ToolButton" parent="Toolbar"]
+margin_left = 16.0
+margin_right = 28.0
+margin_bottom = 22.0
+hint_tooltip = "Load"
+script = ExtResource( 1 )
+icon_name = "Load"
+
+[node name="Save" type="ToolButton" parent="Toolbar"]
+margin_left = 32.0
+margin_right = 44.0
+margin_bottom = 22.0
+hint_tooltip = "Save"
+script = ExtResource( 1 )
+icon_name = "Save"
+
+[node name="VSeparator" type="VSeparator" parent="Toolbar"]
+margin_left = 48.0
+margin_right = 52.0
+margin_bottom = 22.0
+
+[node name="Play" type="Button" parent="Toolbar"]
+margin_left = 56.0
+margin_right = 136.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 0
+text = "Play"
+script = ExtResource( 1 )
+icon_name = "Play"
+
+[node name="Restore" type="Button" parent="Toolbar"]
+margin_left = 140.0
+margin_right = 220.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 80, 0 )
+hint_tooltip = "Restore"
+disabled = true
+text = "Restore"
+script = ExtResource( 1 )
+icon_name = "Reload"
+
+[node name="VSeparator2" type="VSeparator" parent="Toolbar"]
+margin_left = 224.0
+margin_right = 228.0
+margin_bottom = 22.0
+
+[node name="Filename" type="Label" parent="Toolbar"]
+margin_left = 232.0
+margin_top = 4.0
+margin_right = 1020.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+text = "Unsaved sound"
+clip_text = true
+
+[node name="VersionButton" parent="Toolbar" instance=ExtResource( 6 )]
+margin_top = 4.0
+margin_bottom = 18.0
+website = "https://github.com/timothyqiu/gdfxr"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 26.0
+margin_right = 1024.0
+margin_bottom = 30.0
+
+[node name="Editor" type="HBoxContainer" parent="."]
+margin_top = 34.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+
+[node name="Generators" type="VBoxContainer" parent="Editor"]
+margin_right = 128.0
+margin_bottom = 566.0
+rect_min_size = Vector2( 128, 0 )
+
+[node name="Button" type="Button" parent="Editor/Generators"]
+margin_right = 128.0
+margin_bottom = 20.0
+text = "Pickup/Coin"
+
+[node name="Button2" type="Button" parent="Editor/Generators"]
+margin_top = 24.0
+margin_right = 128.0
+margin_bottom = 44.0
+text = "Laser/Shoot"
+
+[node name="Button3" type="Button" parent="Editor/Generators"]
+margin_top = 48.0
+margin_right = 128.0
+margin_bottom = 68.0
+text = "Explosion"
+
+[node name="Button4" type="Button" parent="Editor/Generators"]
+margin_top = 72.0
+margin_right = 128.0
+margin_bottom = 92.0
+text = "Powerup"
+
+[node name="Button5" type="Button" parent="Editor/Generators"]
+margin_top = 96.0
+margin_right = 128.0
+margin_bottom = 116.0
+text = "Hit/Hurt"
+
+[node name="Button6" type="Button" parent="Editor/Generators"]
+margin_top = 120.0
+margin_right = 128.0
+margin_bottom = 140.0
+text = "Jump"
+
+[node name="Button7" type="Button" parent="Editor/Generators"]
+margin_top = 144.0
+margin_right = 128.0
+margin_bottom = 164.0
+text = "Blip/Select"
+
+[node name="HSeparator" type="HSeparator" parent="Editor/Generators"]
+margin_top = 168.0
+margin_right = 128.0
+margin_bottom = 172.0
+
+[node name="Button8" type="Button" parent="Editor/Generators"]
+margin_top = 176.0
+margin_right = 128.0
+margin_bottom = 196.0
+size_flags_horizontal = 3
+text = "Mutate"
+
+[node name="Button9" type="Button" parent="Editor/Generators"]
+margin_top = 200.0
+margin_right = 128.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+text = "Randomize"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Editor"]
+margin_left = 132.0
+margin_right = 1024.0
+margin_bottom = 566.0
+size_flags_horizontal = 3
+scroll_vertical_enabled = false
+
+[node name="Params" type="HBoxContainer" parent="Editor/ScrollContainer"]
+margin_top = 188.0
+margin_right = 895.0
+margin_bottom = 366.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Envolope" type="VBoxContainer" parent="Editor/ScrollContainer/Params"]
+margin_right = 211.0
+margin_bottom = 178.0
+
+[node name="ParamSlider" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_right = 211.0
+margin_bottom = 22.0
+label = "Attack Time"
+parameter = "p_env_attack"
+
+[node name="ParamSlider2" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_top = 26.0
+margin_right = 211.0
+margin_bottom = 48.0
+label = "Sustain Time"
+parameter = "p_env_sustain"
+
+[node name="ParamSlider3" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_top = 52.0
+margin_right = 211.0
+margin_bottom = 74.0
+label = "Sustain Punch"
+parameter = "p_env_punch"
+
+[node name="ParamSlider4" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_top = 78.0
+margin_right = 211.0
+margin_bottom = 100.0
+label = "Decay Time"
+parameter = "p_env_decay"
+
+[node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_top = 104.0
+margin_right = 211.0
+margin_bottom = 126.0
+label = "Change Amount"
+parameter = "p_arp_mod"
+
+[node name="ParamSlider6" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_top = 130.0
+margin_right = 211.0
+margin_bottom = 152.0
+label = "Change Speed"
+parameter = "p_arp_speed"
+
+[node name="ParamSlider7" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
+margin_top = 156.0
+margin_right = 211.0
+margin_bottom = 178.0
+label = "Volume"
+parameter = "sound_vol"
+
+[node name="Frequency" type="VBoxContainer" parent="Editor/ScrollContainer/Params"]
+margin_left = 215.0
+margin_right = 425.0
+margin_bottom = 178.0
+
+[node name="ParamSlider" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_right = 210.0
+margin_bottom = 22.0
+label = "Start Frequency"
+parameter = "p_base_freq"
+
+[node name="ParamSlider2" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_top = 26.0
+margin_right = 210.0
+margin_bottom = 48.0
+label = "Min Frequency"
+parameter = "p_freq_limit"
+
+[node name="ParamSlider3" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_top = 52.0
+margin_right = 210.0
+margin_bottom = 74.0
+label = "Slide"
+parameter = "p_freq_ramp"
+
+[node name="ParamSlider4" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_top = 78.0
+margin_right = 210.0
+margin_bottom = 100.0
+label = "Delta Slide"
+parameter = "p_freq_dramp"
+
+[node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_top = 104.0
+margin_right = 210.0
+margin_bottom = 126.0
+label = "Vibrato Depth"
+parameter = "p_vib_strength"
+
+[node name="ParamSlider6" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_top = 130.0
+margin_right = 210.0
+margin_bottom = 152.0
+label = "Vibrato Speed"
+parameter = "p_vib_speed"
+
+[node name="ParamSlider7" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
+margin_top = 156.0
+margin_right = 210.0
+margin_bottom = 178.0
+label = "Repeat Speed"
+parameter = "p_repeat_speed"
+
+[node name="Waveform" type="VBoxContainer" parent="Editor/ScrollContainer/Params"]
+margin_left = 429.0
+margin_right = 649.0
+margin_bottom = 178.0
+
+[node name="WaveformOption" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 4 )]
+margin_right = 220.0
+margin_bottom = 22.0
+options = [ "Square", "Sawtooth", "Sine", "Noise" ]
+parameter = "wave_type"
+
+[node name="ParamSlider" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 3 )]
+margin_top = 26.0
+margin_right = 220.0
+margin_bottom = 48.0
+label = "Square Duty"
+parameter = "p_duty"
+
+[node name="ParamSlider2" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 3 )]
+margin_top = 52.0
+margin_right = 220.0
+margin_bottom = 74.0
+label = "Duty Sweep"
+parameter = "p_duty_ramp"
+
+[node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 3 )]
+margin_top = 78.0
+margin_right = 220.0
+margin_bottom = 100.0
+label = "Phaser Offset"
+parameter = "p_pha_offset"
+
+[node name="ParamSlider3" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 3 )]
+margin_top = 104.0
+margin_right = 220.0
+margin_bottom = 126.0
+label = "Phaser Sweep"
+parameter = "p_pha_ramp"
+
+[node name="Filter" type="VBoxContainer" parent="Editor/ScrollContainer/Params"]
+margin_left = 653.0
+margin_right = 895.0
+margin_bottom = 178.0
+
+[node name="ParamSlider" parent="Editor/ScrollContainer/Params/Filter" instance=ExtResource( 3 )]
+margin_right = 242.0
+margin_bottom = 22.0
+label = "Low-pass Cutoff"
+parameter = "p_lpf_freq"
+
+[node name="ParamSlider2" parent="Editor/ScrollContainer/Params/Filter" instance=ExtResource( 3 )]
+margin_top = 26.0
+margin_right = 242.0
+margin_bottom = 48.0
+label = "Low-pass Sweep"
+parameter = "p_lpf_ramp"
+
+[node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Filter" instance=ExtResource( 3 )]
+margin_top = 52.0
+margin_right = 242.0
+margin_bottom = 74.0
+label = "Low-pass Resonance"
+parameter = "p_lpf_resonance"
+
+[node name="ParamSlider3" parent="Editor/ScrollContainer/Params/Filter" instance=ExtResource( 3 )]
+margin_top = 78.0
+margin_right = 242.0
+margin_bottom = 100.0
+label = "High-pass Cutoff"
+parameter = "p_hpf_freq"
+
+[node name="ParamSlider4" parent="Editor/ScrollContainer/Params/Filter" instance=ExtResource( 3 )]
+margin_top = 104.0
+margin_right = 242.0
+margin_bottom = 126.0
+label = "High-pass Sweep"
+parameter = "p_hpf_ramp"
+
+[node name="PluginTranslator" parent="." instance=ExtResource( 5 )]
+
+[connection signal="pressed" from="Toolbar/New" to="." method="_on_New_pressed"]
+[connection signal="pressed" from="Toolbar/Load" to="." method="_on_Load_pressed"]
+[connection signal="pressed" from="Toolbar/Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="Toolbar/Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="Toolbar/Restore" to="." method="_on_Restore_pressed"]
+[connection signal="pressed" from="Editor/Generators/Button" to="." method="_on_Randomize_pressed" binds= [ 0 ]]
+[connection signal="pressed" from="Editor/Generators/Button2" to="." method="_on_Randomize_pressed" binds= [ 1 ]]
+[connection signal="pressed" from="Editor/Generators/Button3" to="." method="_on_Randomize_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="Editor/Generators/Button4" to="." method="_on_Randomize_pressed" binds= [ 3 ]]
+[connection signal="pressed" from="Editor/Generators/Button5" to="." method="_on_Randomize_pressed" binds= [ 4 ]]
+[connection signal="pressed" from="Editor/Generators/Button6" to="." method="_on_Randomize_pressed" binds= [ 5 ]]
+[connection signal="pressed" from="Editor/Generators/Button7" to="." method="_on_Randomize_pressed" binds= [ 6 ]]
+[connection signal="pressed" from="Editor/Generators/Button8" to="." method="_on_Mutate_pressed"]
+[connection signal="pressed" from="Editor/Generators/Button9" to="." method="_on_Randomize_pressed" binds= [ -1 ]]

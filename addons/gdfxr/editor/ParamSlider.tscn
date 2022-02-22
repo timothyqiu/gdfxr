@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/gdfxr/editor/ParamSlider.gd" type="Script" id=1]
+[ext_resource path="res://addons/gdfxr/editor/EditorIconButton.gd" type="Script" id=2]
+
+[node name="ParamSlider" type="HBoxContainer"]
+margin_right = 253.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 13.0
+margin_right = 143.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+align = 2
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 147.0
+margin_top = 12.0
+margin_right = 237.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 90, 0 )
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.0
+
+[node name="Reset" type="ToolButton" parent="."]
+margin_left = 241.0
+margin_top = 9.0
+margin_right = 253.0
+margin_bottom = 31.0
+size_flags_vertical = 4
+script = ExtResource( 2 )
+icon_name = "ReloadSmall"
+
+[connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]
