@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gdfxr 1.0\n"
 "Report-Msgid-Bugs-To: timothyqiu32@gmail.com\n"
-"POT-Creation-Date: 2022-02-25 17:37+0800\n"
+"POT-Creation-Date: 2022-03-07 18:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,18 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "Save As..."
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "Copy"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "Paste"
+msgstr ""
 
 #: addons/gdfxr/editor/Editor.gd
 #, python-format
@@ -63,6 +75,10 @@ msgstr ""
 
 #: addons/gdfxr/editor/Editor.tscn
 msgid "Save"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.tscn
+msgid "Extra Options"
 msgstr ""
 
 #: addons/gdfxr/editor/Editor.tscn

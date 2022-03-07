@@ -1,6 +1,8 @@
 tool
 extends Container
 
+enum ExtraOption { SAVE_AS, COPY, PASTE }
+
 const SFXRConfig := preload("../SFXRConfig.gd")
 const SFXRGenerator := preload("../SFXRGenerator.gd")
 
@@ -8,6 +10,7 @@ var plugin: EditorPlugin
 
 var _config := SFXRConfig.new()
 var _config_defaults := SFXRConfig.new()
+var _config_clipboard: SFXRConfig
 var _generator := SFXRGenerator.new()
 var _path: String
 var _modified := false
@@ -18,6 +21,7 @@ onready var audio_player := $AudioStreamPlayer as AudioStreamPlayer
 onready var filename_label := find_node("Filename") as Label
 onready var save_button := find_node("Save") as Button
 onready var restore_button := find_node("Restore") as Button
+onready var extra_button := find_node("Extra") as MenuButton
 onready var version_button := find_node("VersionButton")
 onready var translator := $PluginTranslator
 
@@ -28,6 +32,13 @@ func _ready():
 	
 	for child in get_children():
 		_hook_plugin(child)
+	
+	var popup := extra_button.get_popup()
+	popup.add_item(translator.tr("Save As..."), ExtraOption.SAVE_AS)
+	popup.add_separator()
+	popup.add_item(translator.tr("Copy"), ExtraOption.COPY)
+	popup.add_item(translator.tr("Paste"), ExtraOption.PASTE)
+	popup.connect("id_pressed", self, "_on_Extra_id_pressed")
 	
 	var params := find_node("Params") as Container
 	for category in params.get_children():
@@ -46,6 +57,11 @@ func _notification(what: int):
 	match what:
 		NOTIFICATION_ENTER_TREE, NOTIFICATION_THEME_CHANGED:
 			find_node("ScrollContainer").add_stylebox_override("bg", get_stylebox("bg", "Tree"))
+			
+			if extra_button:
+				var popup = extra_button.get_popup()
+				popup.set_item_icon(popup.get_item_index(ExtraOption.COPY), get_icon("ActionCopy", "EditorIcons"))
+				popup.set_item_icon(popup.get_item_index(ExtraOption.PASTE), get_icon("ActionPaste", "EditorIcons"))
 
 
 func edit(path: String) -> void:
@@ -232,4 +248,26 @@ func _on_Load_pressed():
 		)
 	else:
 		_popup_file_dialog(EditorFileDialog.MODE_OPEN_FILE, "_set_editing_file")
+
+
+func _on_Extra_about_to_show():
+	var popup := extra_button.get_popup()
+	popup.set_item_disabled(popup.get_item_index(ExtraOption.PASTE), _config_clipboard == null)
+
+
+func _on_Extra_id_pressed(id: int) -> void:
+	match id:
+		ExtraOption.SAVE_AS:
+			_popup_file_dialog(EditorFileDialog.MODE_SAVE_FILE, "_on_SaveAsDialog_confirmed")
+		
+		ExtraOption.COPY:
+			if not _config_clipboard:
+				_config_clipboard = SFXRConfig.new()
+			_config_clipboard.copy_from(_config)
+		
+		ExtraOption.PASTE:
+			_config.copy_from(_config_clipboard)
+			_sync_ui()
+			_set_modified(not _config.is_equal(_config_defaults))
+			audio_player.stream = null
 
