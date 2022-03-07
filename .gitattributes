@@ -6,6 +6,7 @@
 /.gitignore             export-ignore
 /.github                export-ignore
 /LICENSE                export-ignore
+/CHANGELOG.md           export-ignore
 /README.md              export-ignore
 /README-zh_CN.md        export-ignore
 /project.godot          export-ignore

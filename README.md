@@ -42,3 +42,7 @@ If you want to reuse an existing sound from the original sfxr, make sure to save
 **Note:** Due to performance constraints with GDScript, the editor may freeze a bit when generating
 long sounds. This only happens in-editor.
 Using `.sfxr` files in-game won't generate anything at runtime.
+
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md).
