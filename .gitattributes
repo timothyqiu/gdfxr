@@ -4,6 +4,7 @@
 # Ignore some files when exporting to a ZIP.
 /.gitattributes         export-ignore
 /.gitignore             export-ignore
+/.github                export-ignore
 /LICENSE                export-ignore
 /README.md              export-ignore
 /README-zh_CN.md        export-ignore
