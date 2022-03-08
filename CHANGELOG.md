@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Extra options menu: Save As, Copy, and Paste.
+- Add a copy of the LICENSE in the plugin folder.
 
 ## [1.0.0] - 2022-02-25
 ### Added
