@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gdfxr 1.0\n"
 "Report-Msgid-Bugs-To: timothyqiu32@gmail.com\n"
-"POT-Creation-Date: 2022-03-07 18:27+0800\n"
-"PO-Revision-Date: 2022-03-07 18:27+0800\n"
+"POT-Creation-Date: 2022-03-10 17:02+0800\n"
+"PO-Revision-Date: 2022-03-10 17:02+0800\n"
 "Last-Translator: Haoyu Qiu <timothyqiu32@gmail.com>\n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -30,6 +30,38 @@ msgstr "复制"
 #: addons/gdfxr/editor/Editor.gd
 msgid "Paste"
 msgstr "粘贴"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "Recently Generated"
+msgstr "最近生成"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Pickup/Coin"
+msgstr "拾取/金币"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Laser/Shoot"
+msgstr "激光/射击"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Explosion"
+msgstr "爆炸"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Powerup"
+msgstr "升级"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Hit/Hurt"
+msgstr "击中/受伤"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Jump"
+msgstr "跳跃"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Blip/Select"
+msgstr "短滴/选择"
 
 #: addons/gdfxr/editor/Editor.gd
 #, python-format
@@ -57,6 +89,14 @@ msgstr "“%s”不是有效的 SFXR 文件。"
 msgid "Unsaved sound"
 msgstr "未保存音效"
 
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Randomize"
+msgstr "随机"
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Mutate"
+msgstr "演化"
+
 #: addons/gdfxr/editor/Editor.gd
 msgid ""
 "There are unsaved changes.\n"
@@ -72,6 +112,10 @@ msgid ""
 msgstr ""
 "存在未保存的修改。\n"
 "仍然要加载吗？"
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "None"
+msgstr "无"
 
 #: addons/gdfxr/editor/Editor.tscn
 msgid "New"
@@ -96,42 +140,6 @@ msgstr "播放"
 #: addons/gdfxr/editor/Editor.tscn
 msgid "Restore"
 msgstr "恢复"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Pickup/Coin"
-msgstr "拾取/金币"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Laser/Shoot"
-msgstr "激光/射击"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Explosion"
-msgstr "爆炸"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Powerup"
-msgstr "升级"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Hit/Hurt"
-msgstr "击中/受伤"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Jump"
-msgstr "跳跃"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Blip/Select"
-msgstr "短滴/选择"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Mutate"
-msgstr "演化"
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Randomize"
-msgstr "随机"
 
 #: addons/gdfxr/editor/Editor.tscn
 msgid "Attack Time"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gdfxr 1.0\n"
 "Report-Msgid-Bugs-To: timothyqiu32@gmail.com\n"
-"POT-Creation-Date: 2022-03-07 18:27+0800\n"
+"POT-Creation-Date: 2022-03-10 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,38 @@ msgstr ""
 
 #: addons/gdfxr/editor/Editor.gd
 msgid "Paste"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "Recently Generated"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Pickup/Coin"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Laser/Shoot"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Explosion"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Powerup"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Hit/Hurt"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Jump"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Blip/Select"
 msgstr ""
 
 #: addons/gdfxr/editor/Editor.gd
@@ -53,6 +85,14 @@ msgstr ""
 msgid "Unsaved sound"
 msgstr ""
 
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Randomize"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd addons/gdfxr/editor/Editor.tscn
+msgid "Mutate"
+msgstr ""
+
 #: addons/gdfxr/editor/Editor.gd
 msgid ""
 "There are unsaved changes.\n"
@@ -63,6 +103,10 @@ msgstr ""
 msgid ""
 "There are unsaved changes.\n"
 "Load anyway?"
+msgstr ""
+
+#: addons/gdfxr/editor/Editor.gd
+msgid "None"
 msgstr ""
 
 #: addons/gdfxr/editor/Editor.tscn
@@ -87,42 +131,6 @@ msgstr ""
 
 #: addons/gdfxr/editor/Editor.tscn addons/gdfxr/editor/Editor.tscn
 msgid "Restore"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Pickup/Coin"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Laser/Shoot"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Explosion"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Powerup"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Hit/Hurt"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Jump"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Blip/Select"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Mutate"
-msgstr ""
-
-#: addons/gdfxr/editor/Editor.tscn
-msgid "Randomize"
 msgstr ""
 
 #: addons/gdfxr/editor/Editor.tscn

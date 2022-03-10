@@ -1,21 +1,29 @@
 tool
 extends Container
 
-enum ExtraOption { SAVE_AS, COPY, PASTE }
+enum ExtraOption { SAVE_AS, COPY, PASTE, RECENT }
 
 const SFXRConfig := preload("../SFXRConfig.gd")
 const SFXRGenerator := preload("../SFXRGenerator.gd")
+const NUM_RECENTS := 4
+
+class RecentEntry:
+	var title: String
+	var config := SFXRConfig.new()
 
 var plugin: EditorPlugin
 
 var _config := SFXRConfig.new()
 var _config_defaults := SFXRConfig.new()
 var _config_clipboard: SFXRConfig
+var _config_recents: Array
+var _recents_id := 0
 var _generator := SFXRGenerator.new()
 var _path: String
 var _modified := false
 var _param_map := {}
 var _syncing_ui := false # a hack since Range set_value emits value_changed
+var _category_names := {}
 
 onready var audio_player := $AudioStreamPlayer as AudioStreamPlayer
 onready var filename_label := find_node("Filename") as Label
@@ -38,7 +46,18 @@ func _ready():
 	popup.add_separator()
 	popup.add_item(translator.tr("Copy"), ExtraOption.COPY)
 	popup.add_item(translator.tr("Paste"), ExtraOption.PASTE)
+	popup.add_separator(translator.tr("Recently Generated"))
 	popup.connect("id_pressed", self, "_on_Extra_id_pressed")
+	
+	_category_names = {
+		SFXRConfig.Category.PICKUP_COIN: translator.tr("Pickup/Coin"),
+		SFXRConfig.Category.LASER_SHOOT: translator.tr("Laser/Shoot"),
+		SFXRConfig.Category.EXPLOSION: translator.tr("Explosion"),
+		SFXRConfig.Category.POWERUP: translator.tr("Powerup"),
+		SFXRConfig.Category.HIT_HURT: translator.tr("Hit/Hurt"),
+		SFXRConfig.Category.JUMP: translator.tr("Jump"),
+		SFXRConfig.Category.BLIP_SELECT: translator.tr("Blip/Select"),
+	}
 	
 	var params := find_node("Params") as Container
 	for category in params.get_children():
@@ -81,6 +100,20 @@ func _hook_plugin(node: Node) -> void:
 		_hook_plugin(child)
 
 
+func _push_recent(title: String) -> void:
+	var recent: RecentEntry
+	if _config_recents.size() < NUM_RECENTS:
+		recent = RecentEntry.new()
+	else:
+		recent = _config_recents.pop_back()
+	
+	_recents_id += 1
+	recent.title = "#%d %s" % [_recents_id, title]
+	recent.config.copy_from(_config)
+	
+	_config_recents.push_front(recent)
+
+
 func _popup_confirm(content: String, callback: String, binds := []) -> void:
 	var dialog := ConfirmationDialog.new()
 	add_child(dialog)
@@ -111,10 +144,17 @@ func _popup_file_dialog(mode: int, callback: String) -> void:
 	dialog.popup_centered_ratio()
 
 
-func _reset_defaults() -> void: # SFXRConfig
+func _reset_defaults() -> void:
 	_config_defaults.copy_from(_config)
 	_set_modified(false)
 	_sync_ui()
+
+
+func _restore_from_config(config: SFXRConfig) -> void:
+	_config.copy_from(config)
+	_sync_ui()
+	_set_modified(not config.is_equal(_config_defaults))
+	audio_player.stream = null
 
 
 func _set_editing_file(path: String) -> int: # Error
@@ -190,8 +230,10 @@ func _on_Play_pressed(force_regenerate := false):
 func _on_Randomize_pressed(category: int):
 	if category == -1:
 		_config.randomize()
+		_push_recent(translator.tr("Randomize"))
 	else:
 		_config.randomize_in_category(category)
+		_push_recent(_category_names.get(category, "Unknown"))
 	
 	_set_modified(true)
 	_sync_ui()
@@ -201,6 +243,7 @@ func _on_Randomize_pressed(category: int):
 func _on_Mutate_pressed():
 	_config.mutate()
 	
+	_push_recent(translator.tr("Mutate"))
 	_set_modified(true)
 	_sync_ui()
 	_on_Play_pressed(true)
@@ -253,6 +296,20 @@ func _on_Load_pressed():
 func _on_Extra_about_to_show():
 	var popup := extra_button.get_popup()
 	popup.set_item_disabled(popup.get_item_index(ExtraOption.PASTE), _config_clipboard == null)
+	
+	# Rebuild recents menu everytime :)
+	var first_recent_index := popup.get_item_index(ExtraOption.RECENT)
+	if first_recent_index != -1:
+		var count := popup.get_item_count()
+		for i in count - first_recent_index:
+			popup.remove_item(count - 1 - i)
+	
+	if _config_recents.empty():
+		popup.add_item(translator.tr("None"), ExtraOption.RECENT)
+		popup.set_item_disabled(popup.get_item_index(ExtraOption.RECENT), true)
+	else:
+		for i in _config_recents.size():
+			popup.add_item(_config_recents[i].title, ExtraOption.RECENT + i)
 
 
 func _on_Extra_id_pressed(id: int) -> void:
@@ -266,8 +323,14 @@ func _on_Extra_id_pressed(id: int) -> void:
 			_config_clipboard.copy_from(_config)
 		
 		ExtraOption.PASTE:
-			_config.copy_from(_config_clipboard)
-			_sync_ui()
-			_set_modified(not _config.is_equal(_config_defaults))
-			audio_player.stream = null
+			_restore_from_config(_config_clipboard)
+		
+		_:
+			var i := id - ExtraOption.RECENT as int
+			if i < 0 or _config_recents.size() <= i:
+				printerr("Bad index %d (%d in total)" % [i, _config_recents.size()])
+				return
+			var recent: RecentEntry = _config_recents[i]
+			_restore_from_config(recent.config)
+			_on_Play_pressed()
 

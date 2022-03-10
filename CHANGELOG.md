@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Extra options menu: Save As, Copy, and Paste.
 - Add a copy of the LICENSE in the plugin folder.
+- Keep several recently generated sounds in the menu.
 
 ## [1.0.0] - 2022-02-25
 ### Added
