@@ -3,6 +3,7 @@
 <img src="icon.png?raw=true"  align="right" />
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![AssetLib](https://img.shields.io/badge/AssetLib-gdfxr-478cbf)](https://godotengine.org/asset-library/asset/1249)
 [![English README](https://img.shields.io/badge/README-English-red)](README.md)
 
 以 Godot 插件形式移植的 [sfxr](https://www.drpetter.se/project_sfxr.html "DrPetter's homepage - sfxr")，这是一个非常流行的复古游戏音效生成器。

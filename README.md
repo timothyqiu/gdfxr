@@ -3,6 +3,7 @@
 <img src="icon.png?raw=true"  align="right" />
 
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![AssetLib](https://img.shields.io/badge/AssetLib-gdfxr-478cbf)](https://godotengine.org/asset-library/asset/1249)
 [![中文 README](https://img.shields.io/badge/README-%E4%B8%AD%E6%96%87-red)](README-zh_CN.md)
 
 A Godot plugin that ports [sfxr](https://www.drpetter.se/project_sfxr.html "DrPetter's homepage - sfxr"),
