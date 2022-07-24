@@ -221,6 +221,7 @@ margin_right = 211.0
 margin_bottom = 126.0
 label = "Change Amount"
 parameter = "p_arp_mod"
+bipolar = true
 
 [node name="ParamSlider6" parent="Editor/ScrollContainer/Params/Envolope" instance=ExtResource( 3 )]
 margin_top = 130.0
@@ -260,6 +261,7 @@ margin_right = 210.0
 margin_bottom = 74.0
 label = "Slide"
 parameter = "p_freq_ramp"
+bipolar = true
 
 [node name="ParamSlider4" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
 margin_top = 78.0
@@ -267,6 +269,7 @@ margin_right = 210.0
 margin_bottom = 100.0
 label = "Delta Slide"
 parameter = "p_freq_dramp"
+bipolar = true
 
 [node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Frequency" instance=ExtResource( 3 )]
 margin_top = 104.0
@@ -313,6 +316,7 @@ margin_right = 220.0
 margin_bottom = 74.0
 label = "Duty Sweep"
 parameter = "p_duty_ramp"
+bipolar = true
 
 [node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 3 )]
 margin_top = 78.0
@@ -320,6 +324,7 @@ margin_right = 220.0
 margin_bottom = 100.0
 label = "Phaser Offset"
 parameter = "p_pha_offset"
+bipolar = true
 
 [node name="ParamSlider3" parent="Editor/ScrollContainer/Params/Waveform" instance=ExtResource( 3 )]
 margin_top = 104.0
@@ -327,6 +332,7 @@ margin_right = 220.0
 margin_bottom = 126.0
 label = "Phaser Sweep"
 parameter = "p_pha_ramp"
+bipolar = true
 
 [node name="Filter" type="VBoxContainer" parent="Editor/ScrollContainer/Params"]
 margin_left = 653.0
@@ -345,6 +351,7 @@ margin_right = 242.0
 margin_bottom = 48.0
 label = "Low-pass Sweep"
 parameter = "p_lpf_ramp"
+bipolar = true
 
 [node name="ParamSlider5" parent="Editor/ScrollContainer/Params/Filter" instance=ExtResource( 3 )]
 margin_top = 52.0
@@ -366,6 +373,7 @@ margin_right = 242.0
 margin_bottom = 126.0
 label = "High-pass Sweep"
 parameter = "p_hpf_ramp"
+bipolar = true
 
 [node name="PluginTranslator" parent="." instance=ExtResource( 5 )]
 

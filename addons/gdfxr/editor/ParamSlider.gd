@@ -6,11 +6,20 @@ signal param_reset(name)
 
 export var label: String setget set_label
 export var parameter: String
+export var bipolar := false setget set_bipolar
 
 
 func set_label(v: String) -> void:
 	label = v
 	$Label.text = v
+
+
+func set_bipolar(v: bool) -> void:
+	bipolar = v
+	if bipolar:
+		$HSlider.min_value = -1.0
+	else:
+		$HSlider.min_value = 0.0
 
 
 func set_value(v: float) -> void:
