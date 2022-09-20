@@ -48,6 +48,9 @@ func _translate_node(node: Node):
 		
 		if node is Label:
 			node.text = tr(node.text)
+		
+		if node is Slider:
+			node.hint_tooltip = tr(node.hint_tooltip)
 	
 	for child in node.get_children():
 		_translate_node(child)

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gdfxr 1.0\n"
 "Report-Msgid-Bugs-To: timothyqiu32@gmail.com\n"
-"POT-Creation-Date: 2022-03-10 17:02+0800\n"
-"PO-Revision-Date: 2022-03-10 17:02+0800\n"
+"POT-Creation-Date: 2022-09-20 14:01+0800\n"
+"PO-Revision-Date: 2022-09-20 14:01+0800\n"
 "Last-Translator: Haoyu Qiu <timothyqiu32@gmail.com>\n"
 "Language-Team: \n"
 "Language: zh_CN\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.9.1\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: addons/gdfxr/editor/Editor.gd
 msgid "Save As..."
@@ -252,3 +252,7 @@ msgstr "高通变频"
 #: addons/gdfxr/editor/ParamOption.tscn
 msgid "Waveform"
 msgstr "波形"
+
+#: addons/gdfxr/editor/ParamSlider.tscn
+msgid "Hold Ctrl to snap to 0.01 increments."
+msgstr "按住 Ctrl 吸附到 0.01 增量。"
