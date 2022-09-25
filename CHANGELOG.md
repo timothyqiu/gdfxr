@@ -6,8 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Display current Slider value when hovered.
-- Hold Ctrl to snap Slider value to 0.01 increments.
+- Implement custom slider.
 
 ## [1.1.1] - 2022-07-30
 ### Fixed

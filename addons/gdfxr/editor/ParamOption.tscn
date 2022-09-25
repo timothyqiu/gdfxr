@@ -9,13 +9,10 @@ margin_bottom = 40.0
 rect_pivot_offset = Vector2( 41, -65 )
 size_flags_horizontal = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
 margin_top = 13.0
-margin_right = 133.0
+margin_right = 128.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
@@ -23,11 +20,11 @@ text = "Waveform"
 align = 2
 
 [node name="OptionButton" type="OptionButton" parent="."]
-margin_left = 137.0
+margin_left = 132.0
 margin_top = 10.0
 margin_right = 237.0
 margin_bottom = 30.0
-rect_min_size = Vector2( 100, 0 )
+rect_min_size = Vector2( 105, 0 )
 size_flags_vertical = 4
 clip_text = true
 
@@ -36,7 +33,9 @@ margin_left = 241.0
 margin_top = 9.0
 margin_right = 253.0
 margin_bottom = 31.0
+focus_mode = 0
 size_flags_vertical = 4
+enabled_focus_mode = 0
 script = ExtResource( 2 )
 icon_name = "ReloadSmall"
 

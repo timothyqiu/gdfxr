@@ -2,13 +2,7 @@
 
 [ext_resource path="res://addons/gdfxr/editor/ParamSlider.gd" type="Script" id=1]
 [ext_resource path="res://addons/gdfxr/editor/EditorIconButton.gd" type="Script" id=2]
-
-[sub_resource type="StyleBoxFlat" id=1]
-content_margin_left = 4.0
-content_margin_right = 4.0
-content_margin_top = 2.0
-content_margin_bottom = 2.0
-bg_color = Color( 0, 0, 0, 1 )
+[ext_resource path="res://addons/gdfxr/editor/EditSlider.gd" type="Script" id=3]
 
 [node name="ParamSlider" type="HBoxContainer"]
 margin_right = 253.0
@@ -18,45 +12,31 @@ script = ExtResource( 1 )
 
 [node name="Label" type="Label" parent="."]
 margin_top = 13.0
-margin_right = 143.0
+margin_right = 128.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 100, 0 )
 size_flags_horizontal = 3
 align = 2
 
-[node name="HSlider" type="HSlider" parent="."]
-margin_left = 147.0
-margin_top = 12.0
+[node name="HSlider" type="Control" parent="."]
+margin_left = 132.0
 margin_right = 237.0
-margin_bottom = 28.0
-rect_min_size = Vector2( 90, 0 )
-hint_tooltip = "Hold Ctrl to snap to 0.01 increments."
-size_flags_vertical = 4
-max_value = 1.0
-step = 0.0
-
-[node name="Anchor" type="Control" parent="HSlider"]
-visible = false
-
-[node name="ValueDisplay" type="Label" parent="HSlider/Anchor"]
-margin_bottom = -2.0
-grow_horizontal = 2
-grow_vertical = 0
-custom_styles/normal = SubResource( 1 )
-align = 1
-valign = 1
+margin_bottom = 40.0
+rect_min_size = Vector2( 105, 0 )
+rect_clip_content = true
+focus_mode = 2
+mouse_default_cursor_shape = 10
+script = ExtResource( 3 )
 
 [node name="Reset" type="ToolButton" parent="."]
 margin_left = 241.0
 margin_top = 9.0
 margin_right = 253.0
 margin_bottom = 31.0
+focus_mode = 0
 size_flags_vertical = 4
 script = ExtResource( 2 )
 icon_name = "ReloadSmall"
 
-[connection signal="gui_input" from="HSlider" to="." method="_on_HSlider_gui_input"]
-[connection signal="mouse_entered" from="HSlider" to="." method="_on_HSlider_mouse_entered"]
-[connection signal="mouse_exited" from="HSlider" to="." method="_on_HSlider_mouse_exited"]
 [connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
 [connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]
