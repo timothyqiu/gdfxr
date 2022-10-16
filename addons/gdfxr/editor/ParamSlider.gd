@@ -1,21 +1,33 @@
-tool
+@tool
 extends HBoxContainer
 
 signal param_changed(name, value)
 signal param_reset(name)
 
-export var label: String setget set_label
-export var parameter: String
-export var bipolar := false setget set_bipolar
+@export var label: String :
+	set = set_label
+@export var parameter: String
+@export var bipolar := false :
+	set = set_bipolar
+
+
+func _ready():
+	set_label(label)
+	set_bipolar(bipolar)
 
 
 func set_label(v: String) -> void:
 	label = v
-	$Label.text = v
+	if is_inside_tree():
+		$Label.text = v
 
 
 func set_bipolar(v: bool) -> void:
 	bipolar = v
+	
+	if not is_inside_tree():
+		return
+	
 	if bipolar:
 		$HSlider.min_value = -1.0
 	else:

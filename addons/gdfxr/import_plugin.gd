@@ -1,39 +1,43 @@
-tool
+@tool
 extends EditorImportPlugin
 
 const SFXRConfig = preload("SFXRConfig.gd")
 const SFXRGenerator = preload("SFXRGenerator.gd")
 
 
-func get_importer_name():
+func _get_importer_name():
 	return "com.timothyqiu.gdfxr.importer"
 
 
-func get_visible_name():
+func _get_import_order():
+	return ResourceImporter.IMPORT_ORDER_DEFAULT
+
+
+func _get_visible_name():
 	return "SFXR Audio"
 
 
-func get_recognized_extensions():
+func _get_recognized_extensions():
 	return ["sfxr"]
 
 
-func get_save_extension():
+func _get_save_extension():
 	return "sample"
 
 
-func get_resource_type():
-	return "AudioStreamSample"
+func _get_resource_type():
+	return "AudioStreamWAV"
 
 
-func get_preset_count():
+func _get_preset_count():
 	return 1
 
 
-func get_preset_name(preset):
+func _get_preset_name(preset):
 	return "Default"
 
 
-func get_import_options(preset):
+func _get_import_options(path, preset):
 	return [
 		{
 			name="loop",
@@ -42,11 +46,11 @@ func get_import_options(preset):
 	]
 
 
-func get_option_visibility(option, options):
+func _get_option_visibility(path, option, options):
 	return true
 
 
-func import(source_file, save_path, options, platform_variants, gen_files):
+func _import(source_file, save_path, options, platform_variants, gen_files):
 	var config := SFXRConfig.new()
 	var err := config.load(source_file)
 	if err != OK:
@@ -55,8 +59,8 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 	
 	var stream := SFXRGenerator.new().generate_audio_stream(config)
 	if options.loop:
-		stream.loop_mode = AudioStreamSample.LOOP_FORWARD
+		stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		stream.loop_end = stream.data.size()
 	
-	var filename = save_path + "." + get_save_extension()
-	return ResourceSaver.save(filename, stream)
+	var filename = save_path + "." + _get_save_extension()
+	return ResourceSaver.save(stream, filename)

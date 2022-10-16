@@ -53,10 +53,9 @@ var sound_vol := 0.5
 
 
 func load(path: String) -> int: # Error
-	var f := File.new()
-	var err := f.open(path, File.READ)
-	if err != OK:
-		return err
+	var f := FileAccess.open(path, FileAccess.READ)
+	if not f:
+		return FileAccess.get_open_error()
 	
 	var version := f.get_32()
 	if not [100, 101, 102].has(version):
@@ -104,10 +103,9 @@ func load(path: String) -> int: # Error
 
 
 func save(path: String) -> int: # Error
-	var f := File.new()
-	var err := f.open(path, File.WRITE)
-	if err != OK:
-		return err
+	var f := FileAccess.open(path, FileAccess.WRITE)
+	if not f:
+		return FileAccess.get_open_error()
 	
 	f.store_32(102)
 	f.store_32(wave_type)
@@ -152,88 +150,88 @@ func randomize_in_category(category: int) -> void:
 	
 	match category:
 		Category.PICKUP_COIN:
-			p_base_freq = rand_range(0.4, 0.9)
+			p_base_freq = randf_range(0.4, 0.9)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0.0, 0.1)
-			p_env_decay = rand_range(0.1, 0.5)
-			p_env_punch = rand_range(0.3, 0.6)
+			p_env_sustain = randf_range(0.0, 0.1)
+			p_env_decay = randf_range(0.1, 0.5)
+			p_env_punch = randf_range(0.3, 0.6)
 			if randi() % 2:
-				p_arp_speed = rand_range(0.5, 0.7)
-				p_arp_mod = rand_range(0.2, 0.6)
+				p_arp_speed = randf_range(0.5, 0.7)
+				p_arp_mod = randf_range(0.2, 0.6)
 		
 		Category.LASER_SHOOT:
 			wave_type = randi() % 3
 			if wave_type == 2 and randi() % 2:
 				wave_type = randi() % 2
-			p_base_freq = rand_range(0.5, 1.0)
-			p_freq_limit = max(0.2, p_base_freq - rand_range(0.2, 0.8))
-			p_freq_ramp = rand_range(-0.35, -0.15)
+			p_base_freq = randf_range(0.5, 1.0)
+			p_freq_limit = max(0.2, p_base_freq - randf_range(0.2, 0.8))
+			p_freq_ramp = randf_range(-0.35, -0.15)
 			if randi() % 3 == 0:
-				p_base_freq = rand_range(0.3, 0.9)
-				p_freq_limit = rand_range(0, 0.1)
-				p_freq_ramp = rand_range(-0.65, -0.35)
+				p_base_freq = randf_range(0.3, 0.9)
+				p_freq_limit = randf_range(0, 0.1)
+				p_freq_ramp = randf_range(-0.65, -0.35)
 			if randi() % 2:
-				p_duty = rand_range(0, 0.5)
-				p_duty_ramp = rand_range(0, 0.2)
+				p_duty = randf_range(0, 0.5)
+				p_duty_ramp = randf_range(0, 0.2)
 			else:
-				p_duty = rand_range(0.4, 0.9)
-				p_duty_ramp = rand_range(-0.7, 0)
+				p_duty = randf_range(0.4, 0.9)
+				p_duty_ramp = randf_range(-0.7, 0)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0.1, 0.3)
-			p_env_decay = rand_range(0.0, 0.4)
+			p_env_sustain = randf_range(0.1, 0.3)
+			p_env_decay = randf_range(0.0, 0.4)
 			if randi() % 2:
-				p_env_punch = rand_range(0, 0.3)
+				p_env_punch = randf_range(0, 0.3)
 			if randi() % 3 == 0:
-				p_pha_offset = rand_range(0, 0.2)
-				p_pha_ramp = rand_range(0, 0.2)
+				p_pha_offset = randf_range(0, 0.2)
+				p_pha_ramp = randf_range(0, 0.2)
 			if randi() % 2:
-				p_hpf_freq = rand_range(0, 0.3)
+				p_hpf_freq = randf_range(0, 0.3)
 		
 		Category.EXPLOSION:
 			wave_type = WaveType.NOISE
 			if randi() % 2:
-				p_base_freq = rand_range(0.1, 0.4)
-				p_freq_ramp = rand_range(-0.1, 0.3)
+				p_base_freq = randf_range(0.1, 0.4)
+				p_freq_ramp = randf_range(-0.1, 0.3)
 			else:
-				p_base_freq = rand_range(0.2, 0.9)
-				p_freq_ramp = rand_range(-0.4, -0.2)
+				p_base_freq = randf_range(0.2, 0.9)
+				p_freq_ramp = randf_range(-0.4, -0.2)
 			p_base_freq *= p_base_freq
 			if randi() % 5 == 0:
 				p_freq_ramp = 0.0
 			if randi() % 3 == 0:
-				p_repeat_speed = rand_range(0.3, 0.8)
+				p_repeat_speed = randf_range(0.3, 0.8)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0.1, 0.4)
-			p_env_decay = rand_range(0, 0.5)
+			p_env_sustain = randf_range(0.1, 0.4)
+			p_env_decay = randf_range(0, 0.5)
 			if randi() % 2:
-				p_pha_offset = rand_range(-0.3, 0.6)
-				p_pha_ramp = rand_range(-0.3, 0)
-			p_env_punch = rand_range(0.2, 0.8)
+				p_pha_offset = randf_range(-0.3, 0.6)
+				p_pha_ramp = randf_range(-0.3, 0)
+			p_env_punch = randf_range(0.2, 0.8)
 			if randi() % 2:
-				p_vib_strength = rand_range(0, 0.7)
-				p_vib_speed = rand_range(0, 0.6)
+				p_vib_strength = randf_range(0, 0.7)
+				p_vib_speed = randf_range(0, 0.6)
 			if randi() % 3:
-				p_arp_speed = rand_range(0.6, 0.9)
-				p_arp_mod = rand_range(-0.8, 0.8)
+				p_arp_speed = randf_range(0.6, 0.9)
+				p_arp_mod = randf_range(-0.8, 0.8)
 		
 		Category.POWERUP:
 			if randi() % 2:
 				wave_type = WaveType.SAWTOOTH
 			else:
-				p_duty = rand_range(0, 0.6)
+				p_duty = randf_range(0, 0.6)
 			if randi() % 2:
-				p_base_freq = rand_range(0.2, 0.5)
-				p_freq_ramp = rand_range(0.1, 0.5)
-				p_repeat_speed = rand_range(0.4, 0.8)
+				p_base_freq = randf_range(0.2, 0.5)
+				p_freq_ramp = randf_range(0.1, 0.5)
+				p_repeat_speed = randf_range(0.4, 0.8)
 			else:
-				p_base_freq = rand_range(0.2, 0.5)
-				p_freq_ramp = rand_range(0.05, 0.25)
+				p_base_freq = randf_range(0.2, 0.5)
+				p_freq_ramp = randf_range(0.05, 0.25)
 				if randi() % 2:
-					p_vib_strength = rand_range(0, 0.7)
-					p_vib_speed = rand_range(0, 0.6)
+					p_vib_strength = randf_range(0, 0.7)
+					p_vib_speed = randf_range(0, 0.6)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0, 0.4)
-			p_env_decay = rand_range(0.1, 0.5)
+			p_env_sustain = randf_range(0, 0.4)
+			p_env_decay = randf_range(0.1, 0.5)
 		
 		Category.HIT_HURT:
 			wave_type = randi() % 3
@@ -241,123 +239,123 @@ func randomize_in_category(category: int) -> void:
 				WaveType.SINE_WAVE:
 					wave_type = WaveType.NOISE
 				WaveType.SQUARE_WAVE:
-					p_duty = rand_range(0, 0.6)
-			p_base_freq = rand_range(0.2, 0.8)
-			p_freq_ramp = rand_range(-0.7, -0.3)
+					p_duty = randf_range(0, 0.6)
+			p_base_freq = randf_range(0.2, 0.8)
+			p_freq_ramp = randf_range(-0.7, -0.3)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0, 0.1)
-			p_env_decay = rand_range(0.1, 0.3)
+			p_env_sustain = randf_range(0, 0.1)
+			p_env_decay = randf_range(0.1, 0.3)
 			if randi() % 2:
-				p_hpf_freq = rand_range(0, 0.3)
+				p_hpf_freq = randf_range(0, 0.3)
 		
 		Category.JUMP:
 			wave_type = WaveType.SQUARE_WAVE
-			p_duty = rand_range(0, 0.6)
-			p_base_freq = rand_range(0.3, 0.6)
-			p_freq_ramp = rand_range(0.1, 0.3)
+			p_duty = randf_range(0, 0.6)
+			p_base_freq = randf_range(0.3, 0.6)
+			p_freq_ramp = randf_range(0.1, 0.3)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0.1, 0.4)
-			p_env_decay = rand_range(0.1, 0.3)
+			p_env_sustain = randf_range(0.1, 0.4)
+			p_env_decay = randf_range(0.1, 0.3)
 			if randi() % 2:
-				p_hpf_freq = rand_range(0, 0.3)
+				p_hpf_freq = randf_range(0, 0.3)
 			if randi() % 2:
-				p_lpf_freq = rand_range(0.4, 1.0)
+				p_lpf_freq = randf_range(0.4, 1.0)
 		
 		Category.BLIP_SELECT:
 			wave_type = randi() % 2
 			if wave_type == WaveType.SQUARE_WAVE:
-				p_duty = rand_range(0, 0.6)
-			p_base_freq = rand_range(0.2, 0.6)
+				p_duty = randf_range(0, 0.6)
+			p_base_freq = randf_range(0.2, 0.6)
 			p_env_attack = 0.0
-			p_env_sustain = rand_range(0.1, 0.2)
-			p_env_decay = rand_range(0, 0.2)
+			p_env_sustain = randf_range(0.1, 0.2)
+			p_env_decay = randf_range(0, 0.2)
 			p_hpf_freq = 0.1
 
 
 func randomize() -> void:
-	p_base_freq = pow(rand_range(-1.0, +1.0), 2.0)
+	p_base_freq = pow(randf_range(-1.0, +1.0), 2.0)
 	if randi() % 2:
-		p_base_freq = pow(rand_range(-1.0, +1.0), 3.0) + 0.5
+		p_base_freq = pow(randf_range(-1.0, +1.0), 3.0) + 0.5
 	p_freq_limit = 0.0
-	p_freq_ramp = pow(rand_range(-1.0, +1.0), 5.0)
+	p_freq_ramp = pow(randf_range(-1.0, +1.0), 5.0)
 	if p_base_freq > 0.7 and p_freq_ramp > 0.2:
 		p_freq_ramp = -p_freq_ramp
 	if p_base_freq < 0.2 and p_freq_ramp < -0.05:
 		p_freq_ramp = -p_freq_ramp
-	p_freq_dramp = pow(rand_range(-1.0, +1.0), 3.0)
-	p_duty = rand_range(-1.0, +1.0)
-	p_duty_ramp = pow(rand_range(-1.0, +1.0), 3.0)
-	p_vib_strength = pow(rand_range(-1.0, +1.0), 3.0)
-	p_vib_speed = rand_range(-1.0, +1.0)
-	# p_vib_delay = rand_range(-1.0, +1.0)
-	p_env_attack = pow(rand_range(-1.0, +1.0), 3.0)
-	p_env_sustain = pow(rand_range(-1.0, +1.0), 2.0)
-	p_env_decay = rand_range(-1.0, +1.0)
-	p_env_punch = pow(rand_range(0, 0.8), 2.0)
+	p_freq_dramp = pow(randf_range(-1.0, +1.0), 3.0)
+	p_duty = randf_range(-1.0, +1.0)
+	p_duty_ramp = pow(randf_range(-1.0, +1.0), 3.0)
+	p_vib_strength = pow(randf_range(-1.0, +1.0), 3.0)
+	p_vib_speed = randf_range(-1.0, +1.0)
+	# p_vib_delay = randf_range(-1.0, +1.0)
+	p_env_attack = pow(randf_range(-1.0, +1.0), 3.0)
+	p_env_sustain = pow(randf_range(-1.0, +1.0), 2.0)
+	p_env_decay = randf_range(-1.0, +1.0)
+	p_env_punch = pow(randf_range(0, 0.8), 2.0)
 	if p_env_attack + p_env_sustain + p_env_decay < 0.2:
-		p_env_sustain += rand_range(0.2, 0.5)
-		p_env_decay += rand_range(0.2, 0.5)
-	p_lpf_resonance = rand_range(-1.0, +1.0)
+		p_env_sustain += randf_range(0.2, 0.5)
+		p_env_decay += randf_range(0.2, 0.5)
+	p_lpf_resonance = randf_range(-1.0, +1.0)
 	p_lpf_freq = 1.0 - pow(randf(), 3.0)
-	p_lpf_ramp = pow(rand_range(-1.0, +1.0), 3.0)
+	p_lpf_ramp = pow(randf_range(-1.0, +1.0), 3.0)
 	if p_lpf_freq < 0.1 and p_lpf_ramp < -0.05:
 		p_lpf_ramp = -p_lpf_ramp
 	p_hpf_freq = pow(randf(), 5.0)
-	p_hpf_ramp = pow(rand_range(-1.0, +1.0), 5.0)
-	p_pha_offset = pow(rand_range(-1.0, +1.0), 3.0)
-	p_pha_ramp = pow(rand_range(-1.0, +1.0), 3.0)
-	p_repeat_speed = rand_range(-1.0, +1.0)
-	p_arp_speed = rand_range(-1.0, +1.0)
-	p_arp_mod = rand_range(-1.0, +1.0)
+	p_hpf_ramp = pow(randf_range(-1.0, +1.0), 5.0)
+	p_pha_offset = pow(randf_range(-1.0, +1.0), 3.0)
+	p_pha_ramp = pow(randf_range(-1.0, +1.0), 3.0)
+	p_repeat_speed = randf_range(-1.0, +1.0)
+	p_arp_speed = randf_range(-1.0, +1.0)
+	p_arp_mod = randf_range(-1.0, +1.0)
 
 
 func mutate() -> void:
 	if randi() % 2:
-		p_base_freq += rand_range(-0.05, +0.05)
+		p_base_freq += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_freq_limit += rand_range(-0.05, +0.05)
+		p_freq_limit += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_freq_ramp += rand_range(-0.05, +0.05)
+		p_freq_ramp += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_freq_dramp += rand_range(-0.05, +0.05)
+		p_freq_dramp += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_duty += rand_range(-0.05, +0.05)
+		p_duty += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_duty_ramp += rand_range(-0.05, +0.05)
+		p_duty_ramp += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_vib_strength += rand_range(-0.05, +0.05)
+		p_vib_strength += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_vib_speed += rand_range(-0.05, +0.05)
+		p_vib_speed += randf_range(-0.05, +0.05)
 #	if randi() % 2:
-#		p_vib_delay += rand_range(-0.05, +0.05)
+#		p_vib_delay += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_env_attack += rand_range(-0.05, +0.05)
+		p_env_attack += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_env_sustain += rand_range(-0.05, +0.05)
+		p_env_sustain += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_env_decay += rand_range(-0.05, +0.05)
+		p_env_decay += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_env_punch += rand_range(-0.05, +0.05)
+		p_env_punch += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_lpf_resonance += rand_range(-0.05, +0.05)
+		p_lpf_resonance += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_lpf_freq += rand_range(-0.05, +0.05)
+		p_lpf_freq += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_lpf_ramp += rand_range(-0.05, +0.05)
+		p_lpf_ramp += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_hpf_freq += rand_range(-0.05, +0.05)
+		p_hpf_freq += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_hpf_ramp += rand_range(-0.05, +0.05)
+		p_hpf_ramp += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_pha_offset += rand_range(-0.05, +0.05)
+		p_pha_offset += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_pha_ramp += rand_range(-0.05, +0.05)
+		p_pha_ramp += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_repeat_speed += rand_range(-0.05, +0.05)
+		p_repeat_speed += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_arp_speed += rand_range(-0.05, +0.05)
+		p_arp_speed += randf_range(-0.05, +0.05)
 	if randi() % 2:
-		p_arp_mod += rand_range(-0.05, +0.05)
+		p_arp_mod += randf_range(-0.05, +0.05)
 
 
 func reset():
@@ -395,7 +393,7 @@ func reset():
 	p_arp_mod = 0.0
 
 
-func copy_from(other: Reference) -> void: # SFXRConfig
+func copy_from(other: RefCounted) -> void: # SFXRConfig
 	wave_type = other.wave_type
 
 	p_env_attack = other.p_env_attack
@@ -430,7 +428,7 @@ func copy_from(other: Reference) -> void: # SFXRConfig
 	sound_vol = other.sound_vol
 
 
-func is_equal(other: Reference) -> bool: # SFXRConfig
+func is_equal(other: RefCounted) -> bool: # SFXRConfig
 	return (
 		wave_type == other.wave_type
 

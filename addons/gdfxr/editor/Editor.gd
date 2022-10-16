@@ -1,4 +1,4 @@
-tool
+@tool
 extends Container
 
 enum ExtraOption { SAVE_AS, COPY, PASTE, RECENT }
@@ -11,7 +11,11 @@ class RecentEntry:
 	var title: String
 	var config := SFXRConfig.new()
 
-var plugin: EditorPlugin
+var plugin: EditorPlugin:
+	set(v):
+		plugin = v
+		for child in get_children():
+			_hook_plugin(child)
 
 var _config := SFXRConfig.new()
 var _config_defaults := SFXRConfig.new()
@@ -25,29 +29,26 @@ var _param_map := {}
 var _syncing_ui := false # a hack since Range set_value emits value_changed
 var _category_names := {}
 
-onready var audio_player := $AudioStreamPlayer as AudioStreamPlayer
-onready var filename_label := find_node("Filename") as Label
-onready var save_button := find_node("Save") as Button
-onready var restore_button := find_node("Restore") as Button
-onready var extra_button := find_node("Extra") as MenuButton
-onready var version_button := find_node("VersionButton")
-onready var translator := $PluginTranslator
+@onready var audio_player := $AudioStreamPlayer as AudioStreamPlayer
+@onready var filename_label := find_child("Filename") as Label
+@onready var save_button := find_child("Save") as Button
+@onready var restore_button := find_child("Restore") as Button
+@onready var extra_button := find_child("Extra") as MenuButton
+@onready var version_button := find_child("VersionButton")
+@onready var translator := $PluginTranslator
 
 
 func _ready():
 	if not plugin:
 		return # Running in the edited scene instead of from Plugin
 	
-	for child in get_children():
-		_hook_plugin(child)
-	
 	var popup := extra_button.get_popup()
 	popup.add_item(translator.tr("Save As..."), ExtraOption.SAVE_AS)
 	popup.add_separator()
-	popup.add_item(translator.tr("Copy"), ExtraOption.COPY)
-	popup.add_item(translator.tr("Paste"), ExtraOption.PASTE)
+	popup.add_icon_item(get_theme_icon("ActionCopy", "EditorIcons"), translator.tr("Copy"), ExtraOption.COPY)
+	popup.add_icon_item(get_theme_icon("ActionPaste", "EditorIcons"), translator.tr("Paste"), ExtraOption.PASTE)
 	popup.add_separator(translator.tr("Recently Generated"))
-	popup.connect("id_pressed", self, "_on_Extra_id_pressed")
+	popup.id_pressed.connect(_on_Extra_id_pressed)
 	
 	_category_names = {
 		SFXRConfig.Category.PICKUP_COIN: translator.tr("Pickup/Coin"),
@@ -59,12 +60,12 @@ func _ready():
 		SFXRConfig.Category.BLIP_SELECT: translator.tr("Blip/Select"),
 	}
 	
-	var params := find_node("Params") as Container
+	var params := find_child("Params") as Container
 	for category in params.get_children():
 		for control in category.get_children():
 			_param_map[control.parameter] = control
-			control.connect("param_changed", self, "_on_param_changed")
-			control.connect("param_reset", self, "_on_param_reset")
+			control.connect("param_changed", _on_param_changed)
+			control.connect("param_reset", _on_param_reset)
 	
 	_set_editing_file("")
 
@@ -75,19 +76,19 @@ func _notification(what: int):
 	
 	match what:
 		NOTIFICATION_ENTER_TREE, NOTIFICATION_THEME_CHANGED:
-			find_node("ScrollContainer").add_stylebox_override("bg", get_stylebox("bg", "Tree"))
+			find_child("ScrollContainer").add_theme_stylebox_override("panel", get_theme_stylebox("panel", "Tree"))
 			
 			if extra_button:
 				var popup = extra_button.get_popup()
-				popup.set_item_icon(popup.get_item_index(ExtraOption.COPY), get_icon("ActionCopy", "EditorIcons"))
-				popup.set_item_icon(popup.get_item_index(ExtraOption.PASTE), get_icon("ActionPaste", "EditorIcons"))
+				popup.set_item_icon(popup.get_item_index(ExtraOption.COPY), get_theme_icon("ActionCopy", "EditorIcons"))
+				popup.set_item_icon(popup.get_item_index(ExtraOption.PASTE), get_theme_icon("ActionPaste", "EditorIcons"))
 
 
 func edit(path: String) -> void:
 	if _modified:
 		_popup_confirm(
 			translator.tr("There are unsaved changes.\nOpen '%s' anyway?") % path,
-			"_set_editing_file", [path]
+			_set_editing_file.bind(path)
 		)
 	else:
 		_set_editing_file(path)
@@ -114,14 +115,14 @@ func _push_recent(title: String) -> void:
 	_config_recents.push_front(recent)
 
 
-func _popup_confirm(content: String, callback: String, binds := []) -> void:
+func _popup_confirm(content: String, callback: Callable) -> void:
 	var dialog := ConfirmationDialog.new()
 	add_child(dialog)
 	dialog.dialog_text = content
-	dialog.window_title = translator.tr("SFXR Editor")
-	dialog.connect("confirmed", self, callback, binds)
-	dialog.connect("popup_hide", dialog, "queue_free")
+	dialog.title = translator.tr("SFXR Editor")
+	dialog.confirmed.connect(callback)
 	dialog.popup_centered()
+	dialog.visibility_changed.connect(dialog.queue_free)
 
 
 func _popup_message(content: String) -> void:
@@ -129,19 +130,19 @@ func _popup_message(content: String) -> void:
 	add_child(dialog)
 	dialog.dialog_text = content
 	dialog.window_title = translator.tr("SFXR Editor")
-	dialog.connect("popup_hide", dialog, "queue_free")
 	dialog.popup_centered()
+	dialog.visibility_changed.connect(dialog.queue_free)
 
 
-func _popup_file_dialog(mode: int, callback: String) -> void:
+func _popup_file_dialog(mode: int, callback: Callable) -> void:
 	var dialog := EditorFileDialog.new()
 	add_child(dialog)
 	dialog.access = EditorFileDialog.ACCESS_RESOURCES
-	dialog.mode = mode
+	dialog.file_mode = mode
 	dialog.add_filter("*.sfxr; %s" % translator.tr("SFXR Audio"))
-	dialog.connect("popup_hide", dialog, "queue_free")
-	dialog.connect("file_selected", self, callback)
+	dialog.file_selected.connect(callback)
 	dialog.popup_centered_ratio()
+	dialog.visibility_changed.connect(dialog.queue_free)
 
 
 func _reset_defaults() -> void:
@@ -158,7 +159,7 @@ func _restore_from_config(config: SFXRConfig) -> void:
 
 
 func _set_editing_file(path: String) -> int: # Error
-	if path.empty():
+	if path.is_empty():
 		_config.reset()
 		audio_player.stream = null
 	else:
@@ -176,7 +177,7 @@ func _set_editing_file(path: String) -> int: # Error
 func _set_modified(value: bool) -> void:
 	_modified = value
 	
-	var has_file := not _path.empty()
+	var has_file := not _path.is_empty()
 	var base = _path if has_file else translator.tr("Unsaved sound")
 	if _modified:
 		base += "(*)"
@@ -257,7 +258,7 @@ func _on_New_pressed():
 	if _modified:
 		_popup_confirm(
 			translator.tr("There are unsaved changes.\nCreate a new one anyway?"),
-			"_on_New_confirmed"
+			_on_New_confirmed
 		)
 	else:
 		_on_New_confirmed()
@@ -268,8 +269,8 @@ func _on_New_confirmed() -> void:
 
 
 func _on_Save_pressed():
-	if _path.empty():
-		_popup_file_dialog(EditorFileDialog.MODE_SAVE_FILE, "_on_SaveAsDialog_confirmed")
+	if _path.is_empty():
+		_popup_file_dialog(EditorFileDialog.FILE_MODE_SAVE_FILE, _on_SaveAsDialog_confirmed)
 	else:
 		_config.save(_path)
 		plugin.get_editor_interface().get_resource_filesystem().scan_sources()
@@ -287,10 +288,10 @@ func _on_Load_pressed():
 	if _modified:
 		_popup_confirm(
 			translator.tr("There are unsaved changes.\nLoad anyway?"),
-			"_popup_file_dialog", [EditorFileDialog.MODE_OPEN_FILE, "_set_editing_file"]
+			_popup_file_dialog.bind(EditorFileDialog.FILE_MODE_OPEN_FILE, "_set_editing_file")
 		)
 	else:
-		_popup_file_dialog(EditorFileDialog.MODE_OPEN_FILE, "_set_editing_file")
+		_popup_file_dialog(EditorFileDialog.FILE_MODE_OPEN_FILE, _set_editing_file)
 
 
 func _on_Extra_about_to_show():
@@ -304,7 +305,7 @@ func _on_Extra_about_to_show():
 		for i in count - first_recent_index:
 			popup.remove_item(count - 1 - i)
 	
-	if _config_recents.empty():
+	if _config_recents.is_empty():
 		popup.add_item(translator.tr("None"), ExtraOption.RECENT)
 		popup.set_item_disabled(popup.get_item_index(ExtraOption.RECENT), true)
 	else:
@@ -315,7 +316,7 @@ func _on_Extra_about_to_show():
 func _on_Extra_id_pressed(id: int) -> void:
 	match id:
 		ExtraOption.SAVE_AS:
-			_popup_file_dialog(EditorFileDialog.MODE_SAVE_FILE, "_on_SaveAsDialog_confirmed")
+			_popup_file_dialog(EditorFileDialog.FILE_MODE_SAVE_FILE, _on_SaveAsDialog_confirmed)
 		
 		ExtraOption.COPY:
 			if not _config_clipboard:

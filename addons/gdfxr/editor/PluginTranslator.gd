@@ -1,7 +1,8 @@
-tool
+@tool
 extends Node
 
-var plugin: EditorPlugin setget set_plugin
+var plugin: EditorPlugin :
+	set = set_plugin
 
 var _translation: Translation
 
@@ -17,7 +18,7 @@ func set_plugin(v: EditorPlugin) -> void:
 	plugin = v
 	var locale: String = plugin.get_editor_interface().get_editor_settings().get('interface/editor/editor_language')
 	var script := get_script() as Script
-	var path := script.resource_path.get_base_dir().plus_file("translations/%s.po" % locale)
+	var path := script.resource_path.get_base_dir().path_join("translations/%s.po" % locale)
 	if ResourceLoader.exists(path):
 		_translation = ResourceLoader.load(path)
 	
@@ -25,17 +26,17 @@ func set_plugin(v: EditorPlugin) -> void:
 		_translate_node(get_parent())
 
 
-func tr(message: String) -> String:
+func tr(message: StringName, context := StringName()) -> String:
 	if _translation:
 		var translated := _translation.get_message(message)
-		if not translated.empty():
-			return translated
-	return message
+		if translated:
+			return String(translated)
+	return String(message)
 
 
 func _translate_node(node: Node):
 	if node is Control:
-		node.hint_tooltip = tr(node.hint_tooltip)
+		node.tooltip_text = tr(node.tooltip_text)
 		
 		if node is HBoxContainer and node.has_method("set_options"):
 			var options = []
@@ -50,7 +51,7 @@ func _translate_node(node: Node):
 			node.text = tr(node.text)
 		
 		if node is Slider:
-			node.hint_tooltip = tr(node.hint_tooltip)
+			node.tooltip_text = tr(node.tooltip_text)
 	
 	for child in node.get_children():
 		_translate_node(child)

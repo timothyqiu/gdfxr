@@ -1,13 +1,14 @@
 [remap]
 
 importer="com.timothyqiu.gdfxr.importer"
-type="AudioStreamSample"
-path="res://.import/example.sfxr-e3731bcdcd8403a2391e92667a5d1076.sample"
+type="AudioStreamWAV"
+uid="uid://byf7u7a25fuf4"
+path="res://.godot/imported/example.sfxr-e3731bcdcd8403a2391e92667a5d1076.sample"
 
 [deps]
 
 source_file="res://example/example.sfxr"
-dest_files=[ "res://.import/example.sfxr-e3731bcdcd8403a2391e92667a5d1076.sample" ]
+dest_files=["res://.godot/imported/example.sfxr-e3731bcdcd8403a2391e92667a5d1076.sample"]
 
 [params]
 

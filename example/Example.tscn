@@ -1,23 +1,23 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bv31mn2hs6wom"]
 
-[ext_resource path="res://example/example.sfxr" type="AudioStream" id=1]
+[ext_resource type="AudioStream" uid="uid://byf7u7a25fuf4" path="res://example/example.sfxr" id="1"]
 
 [node name="Example" type="CenterContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Button" type="Button" parent="."]
-margin_left = 448.0
-margin_top = 284.0
-margin_right = 576.0
-margin_bottom = 316.0
-rect_min_size = Vector2( 128, 32 )
+layout_mode = 2
+offset_left = 555.0
+offset_top = 308.0
+offset_right = 596.0
+offset_bottom = 339.0
 text = "Play"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 1 )
+stream = ExtResource("1")
 
 [connection signal="pressed" from="Button" to="AudioStreamPlayer" method="play"]

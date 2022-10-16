@@ -23,15 +23,15 @@ var vib_speed: float
 var square_duty: float
 var square_slide: float
 var env_vol: float
-var env_length := PoolIntArray([0, 0, 0])
+var env_length := PackedInt32Array([0, 0, 0])
 var phase: int
 var fphase: float
 var fdphase: float
 var iphase: int
 var flthp: float
 var flthp_d: float
-var noise_buffer := PoolRealArray([])
-var phaser_buffer := PoolRealArray([])
+var noise_buffer := PackedFloat32Array([])
+var phaser_buffer := PackedFloat32Array([])
 var ipp: int
 var fltp: float
 var fltdp: float
@@ -41,9 +41,9 @@ var fltdmp: float
 var fltphp: float
 
 
-func generate_audio_stream(config: SFXRConfig) -> AudioStreamSample:
-	var stream := AudioStreamSample.new()
-	stream.format = AudioStreamSample.FORMAT_8_BITS
+func generate_audio_stream(config: SFXRConfig) -> AudioStreamWAV:
+	var stream := AudioStreamWAV.new()
+	stream.format = AudioStreamWAV.FORMAT_8_BITS
 	stream.mix_rate = 44100
 	
 	_config = config
@@ -53,20 +53,20 @@ func generate_audio_stream(config: SFXRConfig) -> AudioStreamSample:
 	return stream
 
 
-func generate_samples(config: SFXRConfig) -> PoolByteArray:
+func generate_samples(config: SFXRConfig) -> PackedByteArray:
 	_config = config
 	var data := _generate_samples()
 	_config = null
 	return data
 
 
-func _generate_samples() -> PoolByteArray:
+func _generate_samples() -> PackedByteArray:
 	_reset_sample(true)
 	
 	var playing_sample := true
 	var env_stage := 0
 	var env_time := 0
-	var output := PoolByteArray([])
+	var output := PackedByteArray([])
 	
 	# SynthSample
 	while playing_sample:
@@ -129,7 +129,7 @@ func _generate_samples() -> PoolByteArray:
 				phase %= period
 				if _config.wave_type == SFXRConfig.WaveType.NOISE:
 					for j in 32:
-						noise_buffer[j] = rand_range(-1.0, +1.0)
+						noise_buffer[j] = randf_range(-1.0, +1.0)
 			
 			# base waveform
 			var fp := float(phase) / period
@@ -176,7 +176,7 @@ func _generate_samples() -> PoolByteArray:
 		
 		var filesample := int((1 + ssample) / 2 * 255)
 		
-		# This is a hack, AudioStreamSample wants a int8_t directly interpreted as uint8_t
+		# This is a hack, AudioStreamWAV wants a int8_t directly interpreted as uint8_t
 		filesample += 128
 		if filesample > 255:
 			filesample -= 255
@@ -241,7 +241,7 @@ func _reset_sample(restart: bool) -> void:
 		
 		noise_buffer.resize(32)
 		for i in noise_buffer.size():
-			noise_buffer[i] = rand_range(-1.0, +1.0)
+			noise_buffer[i] = randf_range(-1.0, +1.0)
 		
 		rep_time = 0
 		rep_limit = int(pow(1.0 - _config.p_repeat_speed, 2.0) * 20000 + 32)

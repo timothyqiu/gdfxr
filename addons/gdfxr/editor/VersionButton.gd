@@ -1,16 +1,17 @@
-tool
+@tool
 extends LinkButton
 
-export var website: String
+@export var website: String
 
-var plugin: EditorPlugin setget set_plugin
+var plugin: EditorPlugin :
+	set = set_plugin
 
 
 func set_plugin(v: EditorPlugin) -> void:
 	plugin = v
 	
 	var script := get_script() as Script
-	var path := script.resource_path.get_base_dir().plus_file("../plugin.cfg")
+	var path := script.resource_path.get_base_dir().path_join("../plugin.cfg")
 	
 	var cfg := ConfigFile.new()
 	var err := cfg.load(path)

@@ -4,10 +4,10 @@
 
 [node name="VersionButton" type="LinkButton"]
 self_modulate = Color( 1, 1, 1, 0.65 )
-margin_left = 1024.0
-margin_top = 5.0
-margin_right = 1024.0
-margin_bottom = 19.0
+offset_left = 1024.0
+offset_top = 5.0
+offset_right = 1024.0
+offset_bottom = 19.0
 focus_mode = 2
 size_flags_vertical = 4
 underline = 1
