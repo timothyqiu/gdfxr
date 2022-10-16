@@ -10,6 +10,8 @@
 
 你可以在 Godot 中把 sfxr 音效文件当作普通的音频文件使用，也可以像在原始的 sfxr 中一样对音效进行编辑。
 
+> 🚧 如果你想在 Godot 4 里使用这个插件，请移步 [godot-4](https://github.com/timothyqiu/gdfxr/tree/godot-4) 分支。
+
 ## 安装
 
 这是一个普通的 Godot 插件。安装时，先下载 ZIP 包，解压后将 `addons/` 文件夹移动到你的项目文件夹中，然后在项目设置中启用本插件。
