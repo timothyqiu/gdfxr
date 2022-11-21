@@ -162,9 +162,9 @@ func _drag_motion(motion: InputEventMouseMotion) -> void:
 	var v := factor * (max_value - min_value) + min_value
 	var snap := motion.is_command_or_control_pressed() or motion.shift_pressed
 	if snap and not (is_equal_approx(v, min_value) or is_equal_approx(v, max_value)):
-		if motion.shift and motion.command:
+		if motion.shift_pressed and motion.is_command_or_control_pressed():
 			v = round(v * 1000.0) * 0.001
-		elif motion.shift:
+		elif motion.shift_pressed:
 			v = round(v * 100.0) * 0.01
 		else:
 			v = round(v * 10.0) * 0.1
@@ -179,7 +179,7 @@ func _show_text_edit() -> void:
 	_line_edit.text = str(value)
 	_line_edit.set_position(gr.position)
 	_line_edit.set_size(gr.size)
-	_line_edit.show_modal()
+	_line_edit.show()  # FIXME: no suitable solution for `show_modal` yet
 	_line_edit.select_all()
 	_line_edit.grab_focus()
 	_line_edit.focus_next = find_next_valid_focus().get_path()
