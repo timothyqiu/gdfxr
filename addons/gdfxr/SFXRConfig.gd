@@ -18,6 +18,8 @@ enum Category {
 	BLIP_SELECT,
 }
 
+const Base58 := preload("res://addons/gdfxr/Base58.gd")
+
 var wave_type: int = WaveType.SQUARE_WAVE
 
 var p_env_attack := 0.0 # Attack Time
@@ -465,3 +467,45 @@ func is_equal(other: Reference) -> bool: # SFXRConfig
 
 		and sound_vol == other.sound_vol
 	)
+
+
+# Load base58 string copied from jsfxr
+# See https://github.com/chr15m/jsfxr/blob/a708164e6ce200008d88202e1aaf2b9171a17ec2/sfxr.js#L132-L175
+func load_from_base58(v: String) -> int: # Error
+	var buffer := Base58.b58decode(v)
+	if not buffer:
+		return ERR_INVALID_DATA
+	if buffer.get_size() != 89:
+		return ERR_INVALID_DATA
+	
+	var params_order = [
+		"p_env_attack",
+		"p_env_sustain",
+		"p_env_punch",
+		"p_env_decay",
+		"p_base_freq",
+		"p_freq_limit",
+		"p_freq_ramp",
+		"p_freq_dramp",
+		"p_vib_strength",
+		"p_vib_speed",
+		"p_arp_mod",
+		"p_arp_speed",
+		"p_duty",
+		"p_duty_ramp",
+		"p_repeat_speed",
+		"p_pha_offset",
+		"p_pha_ramp",
+		"p_lpf_freq",
+		"p_lpf_ramp",
+		"p_lpf_resonance",
+		"p_hpf_freq",
+		"p_hpf_ramp",
+	]
+	
+	wave_type = buffer.get_8()
+	
+	for param in params_order:
+		set(param, buffer.get_float())
+	
+	return OK
