@@ -1,10 +1,11 @@
 @tool
 extends Container
 
-enum ExtraOption { SAVE_AS, COPY, PASTE, RECENT }
+enum ExtraOption { SAVE_AS, COPY, PASTE, PASTE_JSFXR, RECENT }
 
 const SFXRConfig := preload("../SFXRConfig.gd")
 const SFXRGenerator := preload("../SFXRGenerator.gd")
+const Base58 := preload("../Base58.gd")
 const NUM_RECENTS := 4
 
 class RecentEntry:
@@ -47,6 +48,7 @@ func _ready():
 	popup.add_separator()
 	popup.add_icon_item(get_theme_icon("ActionCopy", "EditorIcons"), translator.tr("Copy"), ExtraOption.COPY)
 	popup.add_icon_item(get_theme_icon("ActionPaste", "EditorIcons"), translator.tr("Paste"), ExtraOption.PASTE)
+	popup.add_item(translator.tr("Paste from jsfxr"), ExtraOption.PASTE_JSFXR)
 	popup.add_separator(translator.tr("Recently Generated"))
 	popup.id_pressed.connect(_on_Extra_id_pressed)
 	
@@ -129,7 +131,7 @@ func _popup_message(content: String) -> void:
 	var dialog := AcceptDialog.new()
 	add_child(dialog)
 	dialog.dialog_text = content
-	dialog.window_title = translator.tr("SFXR Editor")
+	dialog.title = translator.tr("SFXR Editor")
 	dialog.popup_centered()
 	dialog.visibility_changed.connect(dialog.queue_free)
 
@@ -297,6 +299,7 @@ func _on_Load_pressed():
 func _on_Extra_about_to_show():
 	var popup := extra_button.get_popup()
 	popup.set_item_disabled(popup.get_item_index(ExtraOption.PASTE), _config_clipboard == null)
+	popup.set_item_disabled(popup.get_item_index(ExtraOption.PASTE_JSFXR), not DisplayServer.clipboard_has())
 	
 	# Rebuild recents menu everytime :)
 	var first_recent_index := popup.get_item_index(ExtraOption.RECENT)
@@ -325,6 +328,13 @@ func _on_Extra_id_pressed(id: int) -> void:
 		
 		ExtraOption.PASTE:
 			_restore_from_config(_config_clipboard)
+		
+		ExtraOption.PASTE_JSFXR:
+			var pasted := SFXRConfig.new()
+			if pasted.load_from_base58(DisplayServer.clipboard_get()) == OK:
+				_restore_from_config(pasted)
+			else:
+				_popup_message(translator.tr("Clipboard does not contain code copied from jsfxr."))
 		
 		_:
 			var i := id - ExtraOption.RECENT as int

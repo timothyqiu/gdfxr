@@ -1,23 +1,59 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv31mn2hs6wom"]
+[gd_scene load_steps=3 format=3 uid="uid://bv31mn2hs6wom"]
 
-[ext_resource type="AudioStream" uid="uid://byf7u7a25fuf4" path="res://example/example.sfxr" id="1"]
+[ext_resource type="Script" path="res://example/Example.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://byf7u7a25fuf4" path="res://example/example.sfxr" id="2"]
 
-[node name="Example" type="CenterContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Example" type="GridContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 2
+script = ExtResource("1")
 
-[node name="Button" type="Button" parent="."]
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2")
+
+[node name="AdhocAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="Play" type="Button" parent="."]
 layout_mode = 2
-offset_left = 555.0
-offset_top = 308.0
-offset_right = 596.0
-offset_bottom = 339.0
+size_flags_vertical = 4
 text = "Play"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1")
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "A .sfxr file can be used as regular audio files like .wav, .ogg, and .mp3."
+autowrap_mode = 3
 
-[connection signal="pressed" from="Button" to="AudioStreamPlayer" method="play"]
+[node name="PlayFile" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Load .sfxr File"
+
+[node name="Label2" type="Label" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "A .sfxr file is a AudioStreamSample resource that can be loaded with load() or preload()."
+autowrap_mode = 3
+
+[node name="Generate" type="Button" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+text = "Runtime Generation"
+
+[node name="Label3" type="Label" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+text = "You can generate the sound effect at runtime. However, due to performance constraints with GDScript, your game might freeze when generating long sounds."
+autowrap_mode = 3
+
+[connection signal="pressed" from="Play" to="." method="_on_Play_pressed"]
+[connection signal="pressed" from="PlayFile" to="." method="_on_PlayFile_pressed"]
+[connection signal="pressed" from="Generate" to="." method="_on_Generate_pressed"]
