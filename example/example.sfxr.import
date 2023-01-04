@@ -13,3 +13,5 @@ dest_files=["res://.godot/imported/example.sfxr-e3731bcdcd8403a2391e92667a5d1076
 [params]
 
 loop=false
+bit_depth=0
+sample_rate=0

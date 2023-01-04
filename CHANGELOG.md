@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Bit depth and sample rate import options.
 - Paste from JSXFR.
 
 ## [1.2.0] - 2022-10-13

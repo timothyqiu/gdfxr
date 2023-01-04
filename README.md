@@ -40,6 +40,9 @@ But they can be used directly as regular `AudioStream`s.
 If you want to reuse an existing sound from the original sfxr, make sure to save it with an
 `.sfxr` extension. You can also load & edit the `.sfxr` file with the original sfxr.
 
+Options for changing Looping, Bit Depth, and Sample Rate are available as import options
+of the `.sfxr` file. You can find these options in Godot editor's Import dock.
+
 **Note:** Due to performance constraints with GDScript, the editor may freeze a bit when generating
 long sounds. This only happens in-editor.
 Using `.sfxr` files in-game won't generate anything at runtime.
