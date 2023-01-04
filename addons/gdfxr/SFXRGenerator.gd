@@ -5,6 +5,15 @@ const SFXRConfig := preload("SFXRConfig.gd")
 
 const master_vol := 0.05
 
+enum WavBits {
+	WAV_BITS_8,
+	WAV_BITS_16,
+}
+enum WavFreq {
+	WAV_FREQ_44100,
+	WAV_FREQ_22050,
+}
+
 var _config: SFXRConfig
 
 var rep_time: int
@@ -41,32 +50,42 @@ var fltdmp: float
 var fltphp: float
 
 
-func generate_audio_stream(config: SFXRConfig) -> AudioStreamSample:
+func generate_audio_stream(
+	config: SFXRConfig,
+	wav_bits: int = WavBits.WAV_BITS_8,
+	wav_freq: int = WavFreq.WAV_FREQ_44100
+) -> AudioStreamSample:
 	var stream := AudioStreamSample.new()
-	stream.format = AudioStreamSample.FORMAT_8_BITS
-	stream.mix_rate = 44100
+	stream.format = AudioStreamSample.FORMAT_8_BITS if wav_bits == WavBits.WAV_BITS_8 else AudioStreamSample.FORMAT_16_BITS
+	stream.mix_rate = 44100 if wav_freq == WavFreq.WAV_FREQ_44100 else 22050
 	
 	_config = config
-	stream.data = _generate_samples()
+	stream.data = _generate_samples(wav_bits, wav_freq).data_array
 	_config = null
 	
 	return stream
 
 
-func generate_samples(config: SFXRConfig) -> PoolByteArray:
+func generate_samples(
+	config: SFXRConfig,
+	wav_bits: int = WavBits.WAV_BITS_8,
+	wav_freq: int = WavFreq.WAV_FREQ_44100
+) -> PoolByteArray:
 	_config = config
-	var data := _generate_samples()
+	var data := _generate_samples(wav_bits, wav_freq).data_array
 	_config = null
 	return data
 
 
-func _generate_samples() -> PoolByteArray:
+func _generate_samples(wav_bits: int, wav_freq: int) -> StreamPeerBuffer:
 	_reset_sample(true)
 	
 	var playing_sample := true
 	var env_stage := 0
 	var env_time := 0
-	var output := PoolByteArray([])
+	var filesample: float = 0
+	var fileacc := 0
+	var buffer := StreamPeerBuffer.new()
 	
 	# SynthSample
 	while playing_sample:
@@ -174,15 +193,21 @@ func _generate_samples() -> PoolByteArray:
 		ssample *= 4.0 # arbitrary gain to get reasonable output volume...
 		ssample = clamp(ssample, -1.0, +1.0)
 		
-		var filesample := int((1 + ssample) / 2 * 255)
+		filesample += ssample
+		fileacc += 1
 		
-		# This is a hack, AudioStreamSample wants a int8_t directly interpreted as uint8_t
-		filesample += 128
-		if filesample > 255:
-			filesample -= 255
-		
-		output.push_back(filesample)
-	return output
+		if wav_freq == WavFreq.WAV_FREQ_44100 or fileacc == 2:
+			filesample /= fileacc
+			fileacc = 0
+			
+			if wav_bits == WavBits.WAV_BITS_8:
+				buffer.put_8(filesample * 255)
+			else:
+				buffer.put_16(filesample * 32000)
+			
+			filesample = 0
+	
+	return buffer
 
 
 func _reset_sample(restart: bool) -> void:

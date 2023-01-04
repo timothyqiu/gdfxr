@@ -39,6 +39,18 @@ func get_import_options(preset):
 			name="loop",
 			default_value=false,
 		},
+		{
+			name="bit_depth",
+			property_hint=PROPERTY_HINT_ENUM,
+			hint_string="8 Bits,16 Bits",
+			default_value=SFXRGenerator.WavBits.WAV_BITS_8,
+		},
+		{
+			name="sample_rate",
+			property_hint=PROPERTY_HINT_ENUM,
+			hint_string="44100 Hz,22050 Hz",
+			default_value=SFXRGenerator.WavFreq.WAV_FREQ_44100,
+		},
 	]
 
 
@@ -53,7 +65,9 @@ func import(source_file, save_path, options, platform_variants, gen_files):
 		printerr("Failed to open %s: %d" % [source_file, err])
 		return err
 	
-	var stream := SFXRGenerator.new().generate_audio_stream(config)
+	var stream := SFXRGenerator.new().generate_audio_stream(
+		config, options.bit_depth, options.sample_rate
+	)
 	if options.loop:
 		stream.loop_mode = AudioStreamSample.LOOP_FORWARD
 		stream.loop_end = stream.data.size()
