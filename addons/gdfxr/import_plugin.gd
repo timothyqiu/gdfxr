@@ -13,6 +13,10 @@ func _get_import_order():
 	return ResourceImporter.IMPORT_ORDER_DEFAULT
 
 
+func _get_priority():
+	return 1.0
+
+
 func _get_visible_name():
 	return "SFXR Audio"
 
