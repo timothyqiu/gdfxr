@@ -86,7 +86,14 @@ func _notification(what: int):
 				popup.set_item_icon(popup.get_item_index(ExtraOption.PASTE), get_theme_icon("ActionPaste", "EditorIcons"))
 
 
-func edit(path: String) -> void:
+func edit(object: Variant) -> void:
+	if not object:
+		if not _modified:
+			_set_editing_file("")
+		# TODO: prompt?
+		return
+	
+	var path := object.resource_path as String
 	if _modified:
 		_popup_confirm(
 			translator.tr("There are unsaved changes.\nOpen '%s' anyway?") % path,

@@ -29,7 +29,7 @@ func _handles(object: Variant) -> bool:
 
 
 func _edit(object: Variant):
-	sfxr_editor.edit(object.resource_path) # Should already passed `handles()` checks
+	sfxr_editor.edit(object)
 
 
 func _make_visible(visible: bool):
