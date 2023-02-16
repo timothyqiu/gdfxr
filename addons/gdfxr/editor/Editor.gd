@@ -2,6 +2,7 @@
 extends Container
 
 enum ExtraOption { SAVE_AS, COPY, PASTE, PASTE_JSFXR, RECENT }
+enum DefaultFilename { EMPTY, GUESS_FOR_SAVE }
 
 const SFXRConfig := preload("../SFXRConfig.gd")
 const SFXRGenerator := preload("../SFXRGenerator.gd")
@@ -143,11 +144,20 @@ func _popup_message(content: String) -> void:
 	dialog.visibility_changed.connect(dialog.queue_free)
 
 
-func _popup_file_dialog(mode: int, callback: Callable) -> void:
+func _popup_file_dialog(mode: int, callback: Callable, default_filename := DefaultFilename.EMPTY) -> void:
 	var dialog := EditorFileDialog.new()
 	add_child(dialog)
 	dialog.access = EditorFileDialog.ACCESS_RESOURCES
 	dialog.file_mode = mode
+	
+	match default_filename:
+		DefaultFilename.EMPTY:
+			pass
+		
+		DefaultFilename.GUESS_FOR_SAVE:
+			if _path:
+				dialog.current_path = _generate_serial_path(_path)
+	
 	dialog.add_filter("*.sfxr; %s" % translator.tr("SFXR Audio"))
 	dialog.file_selected.connect(callback)
 	dialog.popup_centered_ratio()
@@ -203,6 +213,37 @@ func _sync_ui() -> void:
 		control.set_value(value)
 		control.set_resetable(value != _config_defaults.get(name))
 	_syncing_ui = false
+
+
+func _generate_serial_path(path: String) -> String:
+	var directory := DirAccess.open(path.get_base_dir())
+	if not directory:
+		return path
+	
+	if not directory.file_exists(path.get_file()):
+		return path
+	
+	var basename := path.get_basename()
+	var extension := path.get_extension()
+	
+	# Extract trailing number.
+	var num_string: String
+	for i in range(basename.length() - 1, -1, -1):
+		var c: String = basename[i]
+		if "0" <= c and c <= "9":
+			num_string = c + num_string
+		else:
+			break
+	var number := num_string.to_int() if num_string else 0
+	var name_string: String = basename.substr(0, basename.length() - num_string.length())
+	
+	while true:
+		number += 1
+		var attemp := "%s%d.%s" % [name_string, number, extension]
+		if not directory.file_exists(attemp):
+			return attemp
+	
+	return path  # Unreachable
 
 
 func _on_param_changed(name, value):
@@ -326,7 +367,7 @@ func _on_Extra_about_to_show():
 func _on_Extra_id_pressed(id: int) -> void:
 	match id:
 		ExtraOption.SAVE_AS:
-			_popup_file_dialog(EditorFileDialog.FILE_MODE_SAVE_FILE, _on_SaveAsDialog_confirmed)
+			_popup_file_dialog(EditorFileDialog.FILE_MODE_SAVE_FILE, _on_SaveAsDialog_confirmed, DefaultFilename.GUESS_FOR_SAVE)
 		
 		ExtraOption.COPY:
 			if not _config_clipboard:
