@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Bit depth and sample rate import options.
 - Paste from JSXFR.
+- Add default filename for Save As dialog, with trailing number incremented.
 
 ## [1.2.0] - 2022-10-13
 ### Added
