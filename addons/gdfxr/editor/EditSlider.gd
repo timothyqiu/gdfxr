@@ -18,6 +18,7 @@ var _stylebox_value: StyleBox
 var _line_edit_just_closed := false
 var _mouse_hovering := false
 var _is_editing := false
+var _is_cancel := false
 
 var _drag_start_position: Vector2
 var _drag_cancelled := true
@@ -41,9 +42,10 @@ func _init():
 	_line_edit.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 	
 	var _ret: int
-	_ret = _line_edit.connect("focus_exited",Callable(self,"_on_line_edit_focus_exited"))
-	_ret = _line_edit.connect("text_submitted",Callable(self,"_on_line_edit_text_entered"))
-	_ret = _line_edit.connect("visibility_changed",Callable(self,"_on_line_edit_visibility_changed"))
+	_ret = _line_edit.focus_exited.connect(self._on_line_edit_focus_exited)
+	_ret = _line_edit.text_submitted.connect(self._on_line_edit_text_entered)
+	_ret = _line_edit.visibility_changed.connect(self._on_line_edit_visibility_changed)
+	_ret = _line_edit.gui_input.connect(self._on_line_edit_gui_input)
 	
 	add_child(_line_edit)
 
@@ -176,6 +178,7 @@ func _drag_motion(motion: InputEventMouseMotion) -> void:
 
 func _show_text_edit() -> void:
 	var gr := get_global_rect()
+	_is_cancel = false
 	_line_edit.text = str(value)
 	_line_edit.set_position(gr.position)
 	_line_edit.set_size(gr.size)
@@ -189,7 +192,7 @@ func _show_text_edit() -> void:
 func _on_line_edit_focus_exited():
 	if _line_edit.get_menu().visible:
 		return
-	if _line_edit.text.is_valid_float():
+	if not _is_cancel and _line_edit.text.is_valid_float():
 		set_value(clamp(_line_edit.text.to_float(), min_value, max_value))
 	if not _line_edit_just_closed:
 		_line_edit.hide()
@@ -203,3 +206,9 @@ func _on_line_edit_text_entered(_text: String):
 func _on_line_edit_visibility_changed():
 	if not _line_edit.visible:
 		_line_edit_just_closed = true
+
+
+func _on_line_edit_gui_input(event: InputEvent):
+	if event.is_action_pressed("ui_cancel"):
+		_is_cancel = true
+		_line_edit.hide()
