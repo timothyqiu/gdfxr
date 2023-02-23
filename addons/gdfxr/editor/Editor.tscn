@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/gdfxr/editor/Editor.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://p27e3x3kk5e0" path="res://addons/gdfxr/editor/ParamSlider.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://b8wt6fq8w6mxc" path="res://addons/gdfxr/editor/ParamOption.tscn" id="4"]
-[ext_resource type="PackedScene" path="res://addons/gdfxr/editor/PluginTranslator.tscn" id="5"]
+[ext_resource type="PackedScene" uid="uid://cewvefxbttrds" path="res://addons/gdfxr/editor/PluginTranslator.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://addons/gdfxr/editor/VersionButton.tscn" id="6"]
 
 [node name="Editor" type="VBoxContainer"]

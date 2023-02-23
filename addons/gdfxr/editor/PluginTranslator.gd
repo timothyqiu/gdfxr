@@ -23,10 +23,10 @@ func set_plugin(v: EditorPlugin) -> void:
 		_translation = ResourceLoader.load(path)
 	
 	if _translation:
-		_translate_node(get_parent())
+		_translate_node.call_deferred(get_parent())
 
 
-func tr(message: StringName, context := StringName()) -> String:
+func t(message: StringName) -> String:
 	if _translation:
 		var translated := _translation.get_message(message)
 		if translated:
@@ -36,22 +36,22 @@ func tr(message: StringName, context := StringName()) -> String:
 
 func _translate_node(node: Node):
 	if node is Control:
-		node.tooltip_text = tr(node.tooltip_text)
+		node.tooltip_text = t(node.tooltip_text)
 		
 		if node is HBoxContainer and node.has_method("set_options"):
 			var options = []
 			for item in node.options:
-				options.append(tr(item))
+				options.append(t(item))
 			node.options = options
 		
 		if node is Button and not node is OptionButton:
-			node.text = tr(node.text)
+			node.text = t(node.text)
 		
 		if node is Label:
-			node.text = tr(node.text)
+			node.text = t(node.text)
 		
 		if node is Slider:
-			node.tooltip_text = tr(node.tooltip_text)
+			node.tooltip_text = t(node.tooltip_text)
 	
 	for child in node.get_children():
 		_translate_node(child)

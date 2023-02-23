@@ -9,35 +9,23 @@ offset_right = 253.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 script = ExtResource("1")
-label = ""
-parameter = ""
 
 [node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2i(100, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-offset_top = 8.0
-offset_right = 132.0
-offset_bottom = 31.0
 size_flags_horizontal = 3
+horizontal_alignment = 2
 
 [node name="HSlider" type="Control" parent="."]
 clip_contents = true
-custom_minimum_size = Vector2i(105, 0)
+custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
-anchors_preset = 0
-offset_left = 136.0
-offset_right = 241.0
-offset_bottom = 40.0
 focus_mode = 2
 mouse_default_cursor_shape = 10
 script = ExtResource("3")
 
 [node name="Reset" type="Button" parent="."]
 layout_mode = 2
-offset_left = 245.0
-offset_top = 16.0
-offset_right = 253.0
-offset_bottom = 24.0
 size_flags_vertical = 4
 focus_mode = 0
 flat = true
