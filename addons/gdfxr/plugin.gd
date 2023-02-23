@@ -24,11 +24,11 @@ func _exit_tree():
 	import_plugin = null
 
 
-func _handles(object: Variant) -> bool:
+func _handles(object: Object) -> bool:
 	return object is AudioStreamWAV and object.resource_path.ends_with(".sfxr")
 
 
-func _edit(object: Variant):
+func _edit(object: Object):
 	sfxr_editor.edit(object)
 
 

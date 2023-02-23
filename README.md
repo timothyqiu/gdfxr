@@ -12,6 +12,8 @@ the popular program of choice to make retro sound effects for games.
 You can use sfxr sound files like regular audio files in Godot and edit sound files like in the
 original sfxr.
 
+> 🚧 Checkout the [master](https://github.com/timothyqiu/gdfxr/tree/master) branch if you want to use this plugin in Godot 3.
+
 ## Installation
 
 This is a regular plugin for Godot. To install, download the ZIP archive, extract it, and move the
