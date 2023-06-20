@@ -47,9 +47,9 @@ func set_resetable(v: bool) -> void:
 
 
 func _on_HSlider_value_changed(value: float):
-	emit_signal("param_changed", parameter, value)
+	param_changed.emit(parameter, value)
 
 
 func _on_Reset_pressed():
-	emit_signal("param_reset", parameter)
+	param_reset.emit(parameter)
 

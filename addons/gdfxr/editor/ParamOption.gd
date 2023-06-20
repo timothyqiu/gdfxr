@@ -37,8 +37,8 @@ func set_resetable(v: bool) -> void:
 
 
 func _on_OptionButton_item_selected(index: int):
-	emit_signal("param_changed", parameter, index)
+	param_changed.emit(parameter, index)
 
 
 func _on_Reset_pressed():
-	emit_signal("param_reset", parameter)
+	param_reset.emit(parameter)

@@ -67,8 +67,8 @@ func _ready():
 	for category in params.get_children():
 		for control in category.get_children():
 			_param_map[control.parameter] = control
-			control.connect("param_changed", _on_param_changed)
-			control.connect("param_reset", _on_param_reset)
+			control.param_changed.connect(_on_param_changed)
+			control.param_reset.connect(_on_param_reset)
 	
 	_set_editing_file("")
 
@@ -338,7 +338,7 @@ func _on_Load_pressed():
 	if _modified:
 		_popup_confirm(
 			translator.t("There are unsaved changes.\nLoad anyway?"),
-			_popup_file_dialog.bind(EditorFileDialog.FILE_MODE_OPEN_FILE, "_set_editing_file")
+			_popup_file_dialog.bind(EditorFileDialog.FILE_MODE_OPEN_FILE, _set_editing_file)
 		)
 	else:
 		_popup_file_dialog(EditorFileDialog.FILE_MODE_OPEN_FILE, _set_editing_file)
