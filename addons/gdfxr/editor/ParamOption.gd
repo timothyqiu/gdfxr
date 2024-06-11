@@ -2,6 +2,7 @@ tool
 extends HBoxContainer
 
 signal param_changed(name, value)
+signal param_submitted(name)
 signal param_reset(name)
 
 export var options: Array setget set_options
@@ -37,6 +38,7 @@ func set_resetable(v: bool) -> void:
 
 func _on_OptionButton_item_selected(index: int):
 	emit_signal("param_changed", parameter, index)
+	emit_signal("param_submitted", parameter)
 
 
 func _on_Reset_pressed():

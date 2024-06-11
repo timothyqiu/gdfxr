@@ -68,6 +68,7 @@ func _ready():
 			_param_map[control.parameter] = control
 			control.connect("param_changed", self, "_on_param_changed")
 			control.connect("param_reset", self, "_on_param_reset")
+			control.connect("param_submitted", self, "_on_param_submitted")
 	
 	_set_editing_file("")
 
@@ -238,6 +239,10 @@ func _generate_serial_path(path: String) -> String:
 	return path  # Unreachable
 
 
+func _on_param_submitted(_name):
+	_on_Play_pressed(true)
+
+
 func _on_param_changed(name, value):
 	if _syncing_ui:
 		return
@@ -262,6 +267,7 @@ func _on_param_reset(name):
 	
 	_set_modified(not _config.is_equal(_config_defaults))
 	audio_player.stream = null
+	_on_Play_pressed(true)
 
 
 func _on_Play_pressed(force_regenerate := false):
@@ -294,6 +300,7 @@ func _on_Mutate_pressed():
 
 func _on_Restore_pressed():
 	_set_editing_file(_path)
+	_on_Play_pressed(true)
 
 
 func _on_New_pressed():
