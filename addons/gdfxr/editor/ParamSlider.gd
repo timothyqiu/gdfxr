@@ -3,6 +3,7 @@ extends HBoxContainer
 
 signal param_changed(name, value)
 signal param_reset(name)
+signal param_submitted(name)
 
 @export var label: String :
 	set = set_label
@@ -52,4 +53,8 @@ func _on_HSlider_value_changed(value: float):
 
 func _on_Reset_pressed():
 	param_reset.emit(parameter)
+
+
+func _on_HSlider_value_submitted():
+	param_submitted.emit(parameter)
 

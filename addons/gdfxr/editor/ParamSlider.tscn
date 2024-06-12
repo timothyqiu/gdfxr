@@ -32,5 +32,6 @@ flat = true
 script = ExtResource("2")
 icon_name = "ReloadSmall"
 
+[connection signal="value_submitted" from="HSlider" to="." method="_on_HSlider_value_submitted"]
 [connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
 [connection signal="pressed" from="Reset" to="." method="_on_Reset_pressed"]

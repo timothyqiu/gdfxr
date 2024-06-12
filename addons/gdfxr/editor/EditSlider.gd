@@ -2,6 +2,7 @@
 extends Control
 
 signal value_changed(value)
+signal value_submitted()
 
 @export var value: float = 0.0 :
 	set = set_value
@@ -151,6 +152,7 @@ func _drag_done() -> void:
 			(value - min_value) / (max_value - min_value),
 			0.5
 		))
+		value_submitted.emit()
 
 
 func _drag_motion(motion: InputEventMouseMotion) -> void:
@@ -201,6 +203,7 @@ func _on_line_edit_focus_exited():
 
 func _on_line_edit_text_entered(_text: String):
 	_line_edit.hide()
+	value_submitted.emit()
 
 
 func _on_line_edit_visibility_changed():
