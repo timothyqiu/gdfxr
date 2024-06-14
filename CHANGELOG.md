@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Autoplay sound on edit
+
 ## [2.0.0] - 2023-02-23
 ### Added
 - First release for Godot 4. See the `master` branch for Godot 3 support.
